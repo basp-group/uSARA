@@ -1,0 +1,46 @@
+[
+    {   "__comment": "Main",
+        "main": {
+            "msFile": [],
+            "resultPath": [],
+            "algorithm": "usara",
+            "imDimx": 512,
+            "imDimy": 512,
+            "imPixelSize": [],
+            "superresolution": 1.0,
+            "dirProject":[],
+            "ncpus": [],
+            "runID": []
+        }
+    },
+
+    {   "__comment": "General flags",
+
+        "flag": {  
+            "flag_comment_1": "flags",  
+            "flag_imaging": true,    
+            "flag_data_weighting": true,
+            "verbose": true
+        }
+     },
+     
+     {   "__comment": "Denoisers",
+
+        "usara": {  
+            "denoiser_comment_1": "usara params",
+            "imMaxItr": 6000,
+            "imMaxInnerItr": 2000,
+            "imMaxOuterItr": 20,
+            "imVarInnerTol": 1e-5
+        },
+
+        "usara_default": {
+            "denoiser_comment_2": "usara default params", 
+            "imMinInnerItr": 20,
+            "itrSave": 2000,
+            "heuNoiseScale": 1.0,
+            "imVarOuterTol": 1e-4,
+            "reweighting": true
+        }
+    }
+]

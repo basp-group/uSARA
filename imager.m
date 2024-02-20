@@ -44,13 +44,6 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
     fprintf('\nComputing spectral norm of the measurement operator..')
     param_general.measOpNorm = op_norm(FWOp, BWOp, [imDimy,imDimx], 1e-6, 500, 0);
     fprintf('\nINFO: measurement op norm %g', param_general.measOpNorm);
-    % if use primal-dual
-    if ismember(param_general.algorithm, {'cairi', 'cpnp-bm3d'})
-        [~, BWOpCmp] = util_syn_meas_op_single(A, At, G, W, [], true);
-        param_general.measOpNormCmp = op_norm(FWOp, BWOpCmp, [imDimy,imDimx], 1e-6, 500, 0);
-        fprintf('\nINFO: measurement op norm with complex BWOp %g', param_general.measOpNormCmp);
-        clear BWOpCmp
-    end
     
     % Compute PSF & dirty image
     dirac = zeros(imDimy, imDimx);

@@ -63,13 +63,13 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
     
     param_algo.lambda = heuristic / 3.0 / param_algo.gamma; % 9 wavelet bases
     param_algo.noise_floor = heuristic / 3.0;
-    fprintf('\nINFO: regularisation param: %f.', param_algo.lambda)
+    fprintf('\nINFO: regularisation param: %g.', param_algo.lambda)
 
     % dual-FB parameters
     param_prox.ObjTolProx = 1e-4;
     param_prox.MaxItrProx = 200;
     param_prox.lambda = heuristic / 3.0;
-    fprintf('\nINFO: soft-thresholding param: %f.', param_prox.lambda)
+    fprintf('\nINFO: soft-thresholding param: %g.', param_prox.lambda)
     param_algo.param_prox = param_prox;
 
     % reweighting

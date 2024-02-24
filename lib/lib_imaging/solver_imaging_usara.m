@@ -61,6 +61,7 @@ for iter = 1 : param_algo.imMaxItr
         % check outer creteria
         im_relval = sqrt(sum((MODEL - MODEL_prevRe).^2, 'all') ./ (sum(MODEL.^2, 'all')+1e-10));
         if im_relval < param_algo.imVarOuterTol || iter_outer > param_algo.imMaxOuterItr || ~param_algo.reweighting
+            fprintf('\n\nRelative variation outer %g\n\n', im_relval);
             break;
         end
 
@@ -90,7 +91,7 @@ for iter = 1 : param_algo.imMaxItr
 end
 t_total = toc(tStart_total);
 
-fprintf("\n\nImaging finished in %f sec., total number of iterations %d\n\n", t_total, iter);
+fprintf("\n\nImaging finished in %f sec, total number of iterations %d\n\n", t_total, iter);
 fprintf('\n**************************************\n')
 fprintf('********** END OF ALGORITHM **********')
 fprintf('\n**************************************\n')

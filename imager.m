@@ -41,9 +41,14 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
     [FWOp, BWOp] = util_syn_meas_op_single(A, At, G, W, []);
 
     % compute operator norm
-    fprintf('\nComputing spectral norm of the measurement operator..')
-    param_general.measOpNorm = op_norm(FWOp, BWOp, [imDimy,imDimx], 1e-6, 500, 0);
-    fprintf('\nINFO: measurement op norm %g', param_general.measOpNorm);
+    if isfield(param_general, 'measOpNorm') && ~isempty(param_general.measOpNorm)
+        fprintf('\nINFO: user provides measurement op norm %f', param_general.measOpNorm);
+    else
+        fprintf('\nComputing spectral norm of the measurement operator..')
+        rng(1,'Threefry');
+        [param_general.measOpNorm,~] = op_norm(FWOp, BWOp, [imDimy,imDimx], 1e-8, 1000, 0);
+        fprintf('\nINFO: measurement op norm %f', param_general.measOpNorm);
+    end
     
     % Compute PSF & dirty image
     dirac = zeros(imDimy, imDimx);
@@ -64,10 +69,16 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
     if param_general.flag_data_weighting
         % Calculate the correction factor of the heuristic noise level when
         % data weighting vector is used
-        [FWOp_prime, BWOp_prime] = util_syn_meas_op_single(A, At, G, W, nWimag.^2);
-        measOpNorm_prime = op_norm(FWOp_prime,BWOp_prime,[imDimy,imDimx],1e-6,500,0);
-        heuristic_correction = sqrt(measOpNorm_prime/param_general.measOpNorm);
-        clear FWOp_prime BWOp_prime;
+        if isfield(param_general, 'heuCorrFactor') && ~isempty(param_general.heuCorrFactor)
+            fprintf('\nINFO: user provides heuristic correction factor: %f', param_general.heuCorrFactor);
+            heuristic_correction = param_general.heuCorrFactor;
+        else
+            [FWOp_prime, BWOp_prime] = util_syn_meas_op_single(A, At, G, W, nWimag.^2);
+            rng(1,'Threefry');
+            measOpNorm_prime = op_norm(FWOp_prime,BWOp_prime,[imDimy,imDimx],1e-8,1000,0);
+            heuristic_correction = sqrt(measOpNorm_prime/param_general.measOpNorm);
+            clear FWOp_prime BWOp_prime;
+        end
         heuristic = heuristic .* heuristic_correction;
         fprintf('\nINFO: heuristic noise level after correction: %g', heuristic);
     end

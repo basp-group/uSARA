@@ -80,7 +80,7 @@ while 1
     end
 
     % save intermediate results
-    if mod(iter, param_imaging.itrSave) == 0
+    if param_imaging.itrSave > 0 && mod(iter, param_imaging.itrSave) == 0
         fitswrite(MODEL, fullfile(param_imaging.resultPath, ...
             ['tempModel_iter_', num2str(iter), '.fits']))
         RESIDUAL = DirtyIm - BWOp(FWOp(MODEL));

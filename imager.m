@@ -85,7 +85,7 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
 
     %% Set parameters for imaging and algorithms
     param_algo = util_set_param_algo(param_general, heuristic, peak_est, numel(DATA));
-    param_imaging = util_set_param_imaging(param_general, param_algo, [imDimy,imDimx], runID);
+    param_imaging = util_set_param_imaging(param_general, param_algo, [imDimy,imDimx], pathData, runID);
     
     % save dirty image and PSF
     fitswrite(single(PSF), fullfile(param_imaging.resultPath, 'PSF.fits'));
@@ -113,11 +113,9 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
     end
 
     %% Save final results
-    fitswrite(RESULTS.MODEL, fullfile(param_imaging.resultPath, 'FINAL_MODEL.fits'))
-    fitswrite(RESULTS.RESIDUAL, fullfile(param_imaging.resultPath, 'FINAL_RESIDUAL.fits'))
-    fitswrite(RESULTS.RESIDUAL./PSFPeak, fullfile(param_imaging.resultPath, 'FINAL_RESIDUAL_NORMALISED.fits'))
-
-    %% Metrics
+    fitswrite(single(RESULTS.MODEL), fullfile(param_imaging.resultPath, [param_algo.algorithm, '_model_image.fits')])
+    fitswrite(single(RESULTS.RESIDUAL), fullfile(param_imaging.resultPath, [param_algo.algorithm, '_residual_dirty_image.fits')])
+    fitswrite(single(RESULTS.RESIDUAL ./ PSFPeak), fullfile(param_imaging.resultPath, [param_algo.algorithm, '_residual_dirty_image.fits')])
     
     fprintf('\nTHE END\n')
     end

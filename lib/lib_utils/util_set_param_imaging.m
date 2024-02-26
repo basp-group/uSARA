@@ -1,4 +1,4 @@
-function param_imaging = util_set_param_imaging(param_general, param_algo, imDims, runID)
+function param_imaging = util_set_param_imaging(param_general, param_algo, imDims, pathData, runID)
 
     % path for saving results
     % set result path
@@ -10,12 +10,13 @@ function param_imaging = util_set_param_imaging(param_general, param_algo, imDim
     if ~exist(resultPath, 'dir') 
         mkdir(resultPath)
     end
+    % src name
+    [~, srcname, ~] = fileparts(pathData);
     % set subfolder name
     switch param_general.algorithm
         case 'usara'
-            subFolerName = ['uSARA_ID_',num2str(runID), ...
-                '_heuScale_', num2str(param_algo.heuNoiseScale), ...
-                '_maxItr_',num2str(param_algo.imMaxItr)];
+            subFolerName = [srcname, '_uSARA_ID_',num2str(runID), ...
+                '_heuScale_', num2str(param_algo.heuNoiseScale)];
     end
     % set full path
     param_imaging.resultPath = fullfile(resultPath, subFolerName);
@@ -28,8 +29,6 @@ function param_imaging = util_set_param_imaging(param_general, param_algo, imDim
     % interval for saveing intermediate results
     if ~isfield(param_general,'itrSave') || ~isscalar(param_general.itrSave)
         param_imaging.itrSave = 500;
-    elseif param_general.itrSave < 1
-        param_imaging.itrSave = param_algo.imMaxItr + 1; % do not save intermediate results
     else
         param_imaging.itrSave = floor(param_general.itrSave);
     end

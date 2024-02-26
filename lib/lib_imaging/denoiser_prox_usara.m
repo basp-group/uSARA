@@ -55,19 +55,21 @@ while 1
 
     % update dual
     nrmL1 = 0;
+    nrmL1_raw = 0;
     parfor basis = 1 : numel(Psit)
         PsitIm = Psit{basis}(MODEL); % apply \Psi^\dagger
         DualL1{basis} = Id_proxL1(DualL1{basis}+PsitIm, lambda*weights{basis});
-        nrmL1 = nrmL1 + lambda * sum(abs(weights{basis}.*PsitIm), 'all');
+        nrmL1 = nrmL1 + sum(abs(weights{basis}.*PsitIm), 'all');
+        nrmL1_raw = nrmL1_raw + sum(abs(PsitIm), 'all');
     end
 
     %% Stopping criterion
     prev_objective = objective(itr);
     itr = itr + 1;
-    objective(itr) = nrmL2 + nrmL1;
+    objective(itr) = nrmL2 + lambda * nrmL1;
     relative_objective = abs(objective(itr)-prev_objective) / objective(itr);
 
-    fprintf('\n\tProx Iter %i, prox_fval = %e, rel_fval = %e', itr-1, objective(end), relative_objective);
+    fprintf('\n\tProx Iter %i, prox_fval = %e, rel_fval = %e, l1norm = %e, l1norm_w = %e', itr-1, objective(end), relative_objective, nrmL1_raw, nrmL1);
     if (relative_objective < ObjTolProx) || itr >= MaxItrProx
         objective_prev = objective(itr);
         break;

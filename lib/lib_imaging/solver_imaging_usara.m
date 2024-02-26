@@ -47,7 +47,7 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
 
         % denoising step
         tStart_den =tic;
-        [MODEL, DualL1, objective_prev] = denoiser_prox_usara(MODEL, DualL1, Xhat, Psi, Psit, weights, -1, param_prox); %objective_prev
+        [MODEL, DualL1] = denoiser_prox_usara(MODEL, DualL1, Xhat, Psi, Psit, weights, param_prox);
         t_den = toc(tStart_den);
 
         t_iter = toc(tStart_iter);

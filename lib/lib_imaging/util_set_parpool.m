@@ -15,8 +15,7 @@ function hpc_cluster = util_set_parpool(ncores_data, parcluster_name)
 
     numworkers = ncores_data;
 
-%     hpc_cluster = parcluster(parcluster_name); 
-    hpc_cluster = parcluster('local'); 
+    hpc_cluster = parcluster(parcluster_name);
     hpc_cluster.NumWorkers = numworkers;
     hpc_cluster.NumThreads = 1;
   

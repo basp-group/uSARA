@@ -1,4 +1,4 @@
-function [MODEL, DualL1, objective_prev] = denoiser_prox_usara(MODEL, DualL1, Y, Psi, Psit, weights, objective_prev, param)
+function [MODEL, DualL1] = denoiser_prox_usara(MODEL, DualL1, Y, Psi, Psit, weights, param)
 % PROJ_L1 - Proximal operator with L1 norm
 % sol = solver_prox_L1_full_image(x, lambda, param) solves:
 %   min_{z} 0.5*||x - z||_2^2 + lambda * ||Psit (xA + z)||_1
@@ -28,12 +28,7 @@ end
 
 % algo params
 itr = 1;
-objective = objective_prev;
-% step sizes
-% nu = 1;
-% eps_step = 0.99 * min(1/(nu), 1);
-% gamma_step = 1; % because nu==1 ... max(eps_step,2/(nu) -eps_step);
-% lambda_step = 1;
+objective = -1;
 
 % stopping crit.
 ObjTolProx = param.ObjTolProx;
@@ -71,7 +66,6 @@ while 1
 
     fprintf('\n\tProx Iter %i, prox_fval = %e, rel_fval = %e, l1norm = %e, l1norm_w = %e', itr-1, objective(end), relative_objective, nrmL1_raw, nrmL1);
     if (relative_objective < ObjTolProx) || itr >= MaxItrProx
-        objective_prev = objective(itr);
         break;
     end
 

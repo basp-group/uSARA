@@ -33,62 +33,64 @@ fprintf('\n*************************************************\n')
 fprintf('********* STARTING ALGORITHM: %s *********', algo_print_name)
 fprintf('\n*************************************************\n')
 
+iter = 1;
 tStart_total = tic;
-while 1
-    tStart_iter = tic;
-    MODEL_prev = MODEL;
+for iter_outer = 1 : param_algo.imMaxOuterItr
+    for iter_inner = 1 : param_algo.imMaxInnerItr
+        tStart_iter = tic;
+        MODEL_prev = MODEL;
 
-    % gradient step
-    tStart_grad =tic;
-    Xhat = MODEL - param_algo.gamma * (BWOp(FWOp(MODEL)) - DirtyIm);
-    t_grad = toc(tStart_grad);
+        % gradient step
+        tStart_grad =tic;
+        Xhat = MODEL - param_algo.gamma * (BWOp(FWOp(MODEL)) - DirtyIm);
+        t_grad = toc(tStart_grad);
 
-    % denoising step
-    tStart_den =tic;
-    [MODEL, DualL1, objective_prev] = denoiser_prox_usara(MODEL, DualL1, Xhat, Psi, Psit, weights, objective_prev, param_prox);
-    t_den = toc(tStart_den);
+        % denoising step
+        tStart_den =tic;
+        [MODEL, DualL1, objective_prev] = denoiser_prox_usara(MODEL, DualL1, Xhat, Psi, Psit, weights, -1, param_prox); %objective_prev
+        t_den = toc(tStart_den);
 
-    t_iter = toc(tStart_iter);
+        t_iter = toc(tStart_iter);
 
-    % print info
-    im_relval = sqrt(sum((MODEL - MODEL_prev).^2, 'all') ./ (sum(MODEL.^2, 'all')+1e-10));
-    fprintf("\nIter total %d, outer %d, inner %d: relative variation %g, gradient step %f sec, denoising step %f sec, current iteration %f sec.\n", ...
-        iter, iter_outer, iter_inner, im_relval, t_grad, t_den, t_iter);
+        % print info
+        im_relval = sqrt(sum((MODEL - MODEL_prev).^2, 'all') ./ (sum(MODEL.^2, 'all')+1e-10));
+        fprintf("\nIter total %d, outer %d, inner %d: relative variation %g, gradient step %f sec, denoising step %f sec, current iteration %f sec.\n", ...
+            iter, iter_outer, iter_inner, im_relval, t_grad, t_den, t_iter);
 
-    % stopping creteria
-    % check inner creteria
-    if (im_relval < param_algo.imVarInnerTol && iter_inner >= param_algo.imMinInnerItr) || iter_inner > param_algo.imMaxInnerItr
-        % check outer creteria
-        im_relval = sqrt(sum((MODEL - MODEL_prevRe).^2, 'all') ./ (sum(MODEL.^2, 'all')+1e-10));
-        if im_relval < param_algo.imVarOuterTol || iter_outer > param_algo.imMaxOuterItr || ~param_algo.reweighting
-            fprintf('\n\nRelative variation outer %g\n\n', im_relval);
+        
+        % check inner creteria
+        if im_relval < param_algo.imVarInnerTol && iter_inner >= param_algo.imMinInnerItr
             break;
         end
 
-        % re-weighting
-        fprintf('\n\n******* Reweighting, relative variation outer %g *******\n\n', im_relval);
-        parfor basis = 1 : numel(Psit)
-            weights{basis} = noise_floor ./ (noise_floor + abs(Psit{basis}(MODEL)));
+        % save intermediate results
+        if param_imaging.itrSave > 0 && mod(iter, param_imaging.itrSave) == 0
+            fitswrite(MODEL, fullfile(param_imaging.resultPath, ...
+                ['tempModel_iter_', num2str(iter), '.fits']))
+            RESIDUAL = DirtyIm - BWOp(FWOp(MODEL));
+            fitswrite(RESIDUAL, fullfile(param_imaging.resultPath, ...
+                ['tempResidual_iter_', num2str(iter), '.fits']))
         end
 
-        % update
-        MODEL_prevRe = MODEL;
-        iter_outer = iter_outer + 1;
-        iter_inner = 1;
-    else
-        iter_inner = iter_inner + 1;
+        % update iteration counter
+        iter = iter + 1;
     end
 
-    % save intermediate results
-    if param_imaging.itrSave > 0 && mod(iter, param_imaging.itrSave) == 0
-        fitswrite(MODEL, fullfile(param_imaging.resultPath, ...
-            ['tempModel_iter_', num2str(iter), '.fits']))
-        RESIDUAL = DirtyIm - BWOp(FWOp(MODEL));
-        fitswrite(RESIDUAL, fullfile(param_imaging.resultPath, ...
-            ['tempResidual_iter_', num2str(iter), '.fits']))
+    % check outer creteria
+    im_relval = sqrt(sum((MODEL - MODEL_prevRe).^2, 'all') ./ (sum(MODEL.^2, 'all')+1e-10));
+    if im_relval < param_algo.imVarOuterTol || ~param_algo.reweighting
+        fprintf('\n\n******* Relative variation outer %g *******\n\n', im_relval);
+        break;
     end
-    
-    iter = iter + 1;
+
+    % re-weighting
+    fprintf('\n\n******* Reweighting, relative variation outer %g *******\n\n', im_relval);
+    parfor basis = 1 : numel(Psit)
+        weights{basis} = noise_floor ./ (noise_floor + abs(Psit{basis}(MODEL)));
+    end
+
+    % update
+    MODEL_prevRe = MODEL;
 end
 t_total = toc(tStart_total);
 

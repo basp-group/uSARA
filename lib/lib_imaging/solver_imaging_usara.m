@@ -34,7 +34,7 @@ fprintf('********* STARTING ALGORITHM: %s *********', algo_print_name)
 fprintf('\n*************************************************\n')
 
 tStart_total = tic;
-for iter = 1 : param_algo.imMaxItr
+while 1
     tStart_iter = tic;
     MODEL_prev = MODEL;
 
@@ -88,6 +88,7 @@ for iter = 1 : param_algo.imMaxItr
             ['tempResidual_iter_', num2str(iter), '.fits']))
     end
     
+    iter = iter + 1;
 end
 t_total = toc(tStart_total);
 

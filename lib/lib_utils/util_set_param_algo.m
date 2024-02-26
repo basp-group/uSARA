@@ -3,12 +3,6 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
     % algorithm
     param_algo.algorithm = param_general.algorithm;
     
-    % max number of total iterations
-    if ~isfield(param_general,'imMaxItr') || ~isscalar(param_general.imMaxItr)
-        param_algo.imMaxItr = 2000;
-    else
-        param_algo.imMaxItr = param_general.imMaxItr;
-    end
     % max number of inner iterations
     if ~isfield(param_general,'imMaxInnerItr') || ~isscalar(param_general.imMaxInnerItr)
         param_algo.imMaxInnerItr = 2000;

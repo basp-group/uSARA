@@ -28,10 +28,10 @@
 
         "usara": {  
             "denoiser_comment_1": "usara params",
-            "imMaxItr": 6000,
             "imMaxInnerItr": 2000,
             "imMaxOuterItr": 20,
-            "imVarInnerTol": 1e-5
+            "imVarInnerTol": 1e-5,
+            "imVarOuterTol": 1e-4
         },
 
         "usara_default": {
@@ -39,7 +39,6 @@
             "imMinInnerItr": 20,
             "itrSave": 2000,
             "heuNoiseScale": 1.0,
-            "imVarOuterTol": 1e-4,
             "reweighting": true
         }
     }

@@ -53,8 +53,9 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
 
     % step size
     param_algo.gamma = 1.98 / param_general.measOpNorm;
-    fprintf('\nINFO: step size (gamma): %g.', param_algo.lambda)
+    fprintf('\nINFO: step size (gamma): %g.', param_algo.gamma)
     
+    % heuristic parameters
     param_algo.lambda = param_algo.heuristic / 3.0 / param_algo.gamma; % 9 wavelet bases
     param_algo.waveletNoiseFloor = heuristic / 3.0; % decouple from noise scaling factor
     fprintf('\nINFO: regularisation param (lambda): %g.', param_algo.lambda)

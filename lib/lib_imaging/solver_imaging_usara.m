@@ -75,7 +75,7 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
         iter = iter + 1;
     end
     t_outer = toc(tStart_outer);
-    fprintf('\n\n********************* Major cycle %d finished *********************\n', iter_outer);
+    fprintf('\n\n************************** Major cycle %d finished **************************\n', iter_outer);
     fprintf('\nInfo: Major cycle %d took %g sec.', iter_outer, t_outer)
 
     % save intermediate results

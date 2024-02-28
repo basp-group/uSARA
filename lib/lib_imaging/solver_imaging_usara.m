@@ -83,9 +83,9 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
     residual_std = std(RESIDUAL, 0, 'all');
     if param_imaging.itrSave > 0
         fitswrite(single(MODEL), fullfile(param_imaging.resultPath, ...
-            ['tempModel_major_iter_', num2str(iter), '.fits']))
+            ['tempModel_major_iter_', num2str(iter_outer), '.fits']))
         fitswrite(single(RESIDUAL), fullfile(param_imaging.resultPath, ...
-            ['tempResidual_major_iter_', num2str(iter), '.fits']))
+            ['tempResidual_major_iter_', num2str(iter_outer), '.fits']))
     end
     fprintf('\nINFO: The std of the residual dirty image %g', residual_std)
 

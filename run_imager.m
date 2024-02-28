@@ -12,8 +12,8 @@ function run_imager(json_filename, NameValueArgs)
 
 arguments
     json_filename (1,:) {mustBeFile}
-    NameValueArgs.dataFile (1,:) {mustBeFile}
     NameValueArgs.srcName (1,:) {mustBeText}
+    NameValueArgs.dataFile (1,:) {mustBeFile}
     NameValueArgs.resultPath (1,:) {mustBeText}
     NameValueArgs.algorithm (1,:) {mustBeMember(NameValueArgs.algorithm,{'usara'})}
     NameValueArgs.imPixelSize (1,1) {mustBePositive}
@@ -31,11 +31,11 @@ config = jsondecode(str);
 % main input
 main = cell2struct(struct2cell(config{1, 1}.main), fieldnames(config{1, 1}.main));
 % overwrite fields in main if available
-if isfield(NameValueArgs, 'dataFile')
-    main.dataFile = NameValueArgs.dataFile;
-end
 if isfield(NameValueArgs, 'srcName')
     main.srcName = NameValueArgs.srcName;
+end
+if isfield(NameValueArgs, 'dataFile')
+    main.dataFile = NameValueArgs.dataFile;
 end
 if isfield(NameValueArgs, 'resultPath')
     main.resultPath = NameValueArgs.resultPath;

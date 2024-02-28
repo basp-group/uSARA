@@ -40,8 +40,9 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
         param_algo.heuNoiseScale = param_general.heuNoiseScale;
     end
     % heuristic noise level
+    param_algo.heuristic = heuristic;
     if param_algo.heuNoiseScale ~= 1.0
-        param_algo.heuristic = heuristic * param_algo.heuNoiseScale;
+        param_algo.heuristic = param_algo.heuristic * param_algo.heuNoiseScale;
         fprintf('\nINFO: heuristic noise level after scaling: %g', param_algo.heuristic);
     end
 

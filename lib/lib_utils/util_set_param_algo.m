@@ -34,15 +34,15 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
         param_algo.imVarOuterTol = param_general.imVarOuterTol;
     end
     % heuristic noise scale
-    if ~isfield(param_general,'heuNoiseScale') || ~isscalar(param_general.heuNoiseScale) || param_general.heuNoiseScale<=0
-        param_algo.heuNoiseScale = 1.0;
+    if ~isfield(param_general,'heuRegParamScale') || ~isscalar(param_general.heuRegParamScale) || param_general.heuRegParamScale<=0
+        param_algo.heuRegParamScale = 1.0;
     else
-        param_algo.heuNoiseScale = param_general.heuNoiseScale;
+        param_algo.heuRegParamScale = param_general.heuRegParamScale;
     end
     % heuristic noise level
     param_algo.heuristic = heuristic;
-    if param_algo.heuNoiseScale ~= 1.0
-        param_algo.heuristic = param_algo.heuristic * param_algo.heuNoiseScale;
+    if param_algo.heuRegParamScale ~= 1.0
+        param_algo.heuristic = param_algo.heuristic * param_algo.heuRegParamScale;
         fprintf('\nINFO: heuristic noise level after scaling: %g', param_algo.heuristic);
     end
 

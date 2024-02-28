@@ -20,7 +20,7 @@ function param_imaging = util_set_param_imaging(param_general, param_algo, imDim
     switch param_general.algorithm
         case 'usara'
             subFolerName = [srcname, '_uSARA_ID_',num2str(runID), ...
-                '_heuScale_', num2str(param_algo.heuNoiseScale)];
+                '_heuRegScale_', num2str(param_algo.heuRegParamScale)];
     end
     % set full path
     param_imaging.resultPath = fullfile(resultPath, subFolerName);

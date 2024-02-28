@@ -14,7 +14,7 @@ weights = cell(numel((param_algo.dict.basis)) , 1);
 for i = 1 : numel(weights)
     weights{i} = 1.0;
 end
-noise_floor = param_algo.heuristic;
+waveletNoiseFloor = param_algo.waveletNoiseFloor;
 objective_prev = -1;
 % calculate dirty image
 DirtyIm = BWOp(DATA);
@@ -86,7 +86,7 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
     % re-weighting
     fprintf('\n\n******* Reweighting, relative variation outer %g *******\n\n', im_relval);
     parfor basis = 1 : numel(Psit)
-        weights{basis} = noise_floor ./ (noise_floor + abs(Psit{basis}(MODEL)));
+        weights{basis} = waveletNoiseFloor ./ (waveletNoiseFloor + abs(Psit{basis}(MODEL)));
     end
 
     % update

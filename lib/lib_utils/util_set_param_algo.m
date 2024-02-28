@@ -41,10 +41,9 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
     end
     % heuristic noise level
     if param_algo.heuNoiseScale ~= 1.0
-        heuristic = heuristic * param_algo.heuNoiseScale;
-        fprintf('\nINFO: heuristic noise level after scaling: %g', heuristic);
+        param_algo.heuristic = heuristic * param_algo.heuNoiseScale;
+        fprintf('\nINFO: heuristic noise level after scaling: %g', param_algo.heuristic);
     end
-    param_algo.heuristic = heuristic;
 
     % dictionary
     dict.nlevel = 4;
@@ -54,16 +53,17 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
 
     % step size
     param_algo.gamma = 1.98 / param_general.measOpNorm;
+    fprintf('\nINFO: step size (gamma): %g.', param_algo.lambda)
     
-    param_algo.lambda = heuristic / 3.0 / param_algo.gamma; % 9 wavelet bases
-    param_algo.noise_floor = heuristic / 3.0;
-    fprintf('\nINFO: regularisation param: %g.', param_algo.lambda)
+    param_algo.lambda = param_algo.heuristic / 3.0 / param_algo.gamma; % 9 wavelet bases
+    param_algo.waveletNoiseFloor = heuristic / 3.0; % decouple from noise scaling factor
+    fprintf('\nINFO: regularisation param (lambda): %g.', param_algo.lambda)
 
     % dual-FB parameters
     param_prox.ObjTolProx = 1e-4;
     param_prox.MaxItrProx = 200;
-    param_prox.lambda = heuristic / 3.0;
-    fprintf('\nINFO: soft-thresholding param: %g.', param_prox.lambda)
+    param_prox.gamma_lambda = param_algo.heuristic / 3.0;
+    fprintf('\nINFO: soft-thresholding param (gamma x lambda): %g.', param_prox.gamma_lambda)
     param_algo.param_prox = param_prox;
 
     % reweighting

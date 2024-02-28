@@ -16,7 +16,7 @@ if ~isfield(param, 'ObjTolProx'), param.ObjTolProx = 1e-4; end
 if ~isfield(param, 'MaxItrProx'), param.MaxItrProx = 200; end
 
 %%  Initializations
-lambda = param.lambda;
+gamma_lambda = param.gamma_lambda;
 
 % dual variable
 if isempty(DualL1)
@@ -53,7 +53,7 @@ while 1
     nrmL1_raw = 0;
     parfor basis = 1 : numel(Psit)
         PsitIm = Psit{basis}(MODEL); % apply \Psi^\dagger
-        DualL1{basis} = Id_proxL1(DualL1{basis}+PsitIm, lambda*weights{basis});
+        DualL1{basis} = Id_proxL1(DualL1{basis}+PsitIm, gamma_lambda*weights{basis});
         nrmL1 = nrmL1 + sum(abs(weights{basis}.*PsitIm), 'all');
         nrmL1_raw = nrmL1_raw + sum(abs(PsitIm), 'all');
     end
@@ -61,7 +61,7 @@ while 1
     %% Stopping criterion
     prev_objective = objective(itr);
     itr = itr + 1;
-    objective(itr) = nrmL2 + lambda * nrmL1;
+    objective(itr) = nrmL2 + gamma_lambda * nrmL1;
     relative_objective = abs(objective(itr)-prev_objective) / objective(itr);
 
     fprintf('\n\tProx Iter %i, prox_fval = %e, rel_fval = %e, l1norm = %e, l1norm_w = %e', itr-1, objective(end), relative_objective, nrmL1_raw, nrmL1);

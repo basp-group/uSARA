@@ -35,6 +35,7 @@ fprintf('\n*************************************************\n')
 iter = 1;
 tStart_total = tic;
 for iter_outer = 1 : param_algo.imMaxOuterItr
+    tStart_outer = tic;
     for iter_inner = 1 : param_algo.imMaxInnerItr
         tStart_iter = tic;
         MODEL_prev = MODEL;
@@ -56,7 +57,6 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
         fprintf("\nIter cumul %d, outer %d, inner %d: relative variation %g, gradient step %f sec, denoising step %f sec, current iteration %f sec.\n", ...
             iter, iter_outer, iter_inner, im_relval, t_grad, t_den, t_iter);
 
-        
         % check inner creteria
         if im_relval < param_algo.imVarInnerTol && iter_inner >= param_algo.imMinInnerItr
             break;
@@ -74,16 +74,33 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
         % update iteration counter
         iter = iter + 1;
     end
+    t_outer = toc(tStart_outer);
+    fprintf('\n\n********************* Major cycle %d finished *********************\n', iter_outer);
+    fprintf('\nInfo: Major cycle %d took %g sec.', iter_outer, t_outer)
+
+    % save intermediate results
+    RESIDUAL = DirtyIm - BWOp(FWOp(MODEL));
+    residual_std = std(RESIDUAL, 0, 'all');
+    if param_imaging.itrSave > 0
+        fitswrite(single(MODEL), fullfile(param_imaging.resultPath, ...
+            ['tempModel_major_iter_', num2str(iter), '.fits']))
+        fitswrite(single(RESIDUAL), fullfile(param_imaging.resultPath, ...
+            ['tempResidual_major_iter_', num2str(iter), '.fits']))
+    end
+    fprintf('\nINFO: The std of the residual dirty image %g', residual_std)
 
     % check outer creteria
     im_relval = sqrt(sum((MODEL - MODEL_prevRe).^2, 'all') ./ (sum(MODEL.^2, 'all')+1e-10));
+    fprintf('\nInfo: Image relative variation of the major cycle %g', im_relval)
     if im_relval < param_algo.imVarOuterTol || ~param_algo.reweighting
-        fprintf('\n\n******* Relative variation outer %g *******\n\n', im_relval);
         break;
     end
 
     % re-weighting
-    fprintf('\n\n******* Reweighting, relative variation outer %g *******\n\n', im_relval);
+    if iter_outer <=  param_algo.imMaxOuterItr - 1
+        fprintf('\n\n********************* Reweighting, start major cycle %d *********************\n', iter_outer + 1);
+    end
+
     parfor basis = 1 : numel(Psit)
         weights{basis} = waveletNoiseFloor ./ (waveletNoiseFloor + abs(Psit{basis}(MODEL)));
     end
@@ -93,7 +110,7 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
 end
 t_total = toc(tStart_total);
 
-fprintf("\n\nImaging finished in %f sec, total number of iterations %d\n\n", t_total, iter);
+fprintf("\n\nImaging finished in %f sec, cumulative number of iterations %d\n\n", t_total, iter);
 fprintf('\n**************************************\n')
 fprintf('********** END OF ALGORITHM **********')
 fprintf('\n**************************************\n')

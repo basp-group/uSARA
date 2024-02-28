@@ -54,7 +54,7 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
 
         % print info
         im_relval = sqrt(sum((MODEL - MODEL_prev).^2, 'all') ./ (sum(MODEL.^2, 'all')+1e-10));
-        fprintf("\nIter total %d, outer %d, inner %d: relative variation %g, gradient step %f sec, denoising step %f sec, current iteration %f sec.\n", ...
+        fprintf("\nIter cumul %d, outer %d, inner %d: relative variation %g, gradient step %f sec, denoising step %f sec, current iteration %f sec.\n", ...
             iter, iter_outer, iter_inner, im_relval, t_grad, t_den, t_iter);
 
         

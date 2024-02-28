@@ -15,7 +15,6 @@ for i = 1 : numel(weights)
     weights{i} = 1.0;
 end
 waveletNoiseFloor = param_algo.waveletNoiseFloor;
-objective_prev = -1;
 % calculate dirty image
 DirtyIm = BWOp(DATA);
 
@@ -26,7 +25,7 @@ hpc_cluster = util_set_parpool(min(numel(param_algo.dict.basis), feature('numcor
 % uSARA specific
 % param_prox: lambda, verbose, ObjTolProx, MaxItrProx
 param_prox = param_algo.param_prox;
-algo_print_name = '  USARA  ';
+algo_print_name = '  uSARA  ';
 
 %% ALGORITHM
 fprintf('\n*************************************************\n')

@@ -1,7 +1,8 @@
 [
     {   "__comment": "Main",
         "main": {
-            "msFile": [],
+            "msName": [],
+            "dataFile": [],
             "resultPath": [],
             "algorithm": "usara",
             "imDimx": 512,
@@ -28,18 +29,18 @@
 
         "usara": {  
             "denoiser_comment_1": "usara params",
-            "imMaxInnerItr": 2000,
-            "imMaxOuterItr": 20,
-            "imVarInnerTol": 1e-5,
-            "imVarOuterTol": 1e-4
+            "heuNoiseScale": 1.0,
+            "reweighting": true
         },
 
         "usara_default": {
             "denoiser_comment_2": "usara default params", 
             "imMinInnerItr": 20,
             "itrSave": 2000,
-            "heuNoiseScale": 1.0,
-            "reweighting": true
+            "imMaxInnerItr": 2000,
+            "imMaxOuterItr": 20,
+            "imVarInnerTol": 1e-5,
+            "imVarOuterTol": 1e-4
         }
     }
 ]

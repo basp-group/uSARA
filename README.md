@@ -18,7 +18,7 @@
 
 >[1] Terris, M., Dabbech, A., Tang, C., & Wiaux, Y. (2023). [Image reconstruction algorithms in radio interferometry: From handcrafted to learned regularization denoisers](https://doi.org/10.1093/mnras/stac2672). *MNRAS, 518*(1), 604-622.
 >
->[2] Repetti, A., Birdi, J., Dabbech, A., & Wiaux, Y. (2017). [Non-convex optimization for self-calibration of direction-dependent effects in radio interferometric imaging](https://doi.org/10.1093/mnras/stx1267). *Monthly Notices of the Royal Astronomical Society, 470*(4), 3981-4006. (WRONG REF UPDATE: repetti 2020 conf)
+>[2] Repetti, A., & Wiaux, Y. (2020). A forward-backward algorithm for reweighted procedures: Application to radio-astronomical imaging. *ICASSP 2020-2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)* (pp. 1434-1438). IEEE.
 
 ## Dependencies 
 

@@ -62,8 +62,10 @@ You can then clone the repository with all the submodules as follows:
 ```bash
 git clone --recurse-submodules git@github.com:basp-group/uSARA.git
 ```
+The full path to the uSARA repository is referred to as `$uSARA` in the rest of the documentation.
+
 ### Updating submodules (optional)
-- To update the submodules from your local `uSARA` repository, run the follwing commands: 
+- To update the submodules from your local repository `$uSARA`, run the follwing commands: 
 ```bash
 git pull
 git submodule sync --recursive # update submodule address, in case the url has changed
@@ -73,7 +75,7 @@ git submodule update --remote --merge # fetch and merge latest state of the subm
 
 ## Input Files
 ### Measurement file
-The current code takes as input data a measurement file in ``.mat`` format containing the following fields:
+The current code takes as input data a measurement file in ``.mat`` format, located in `$uSARA/data/`, and containing the following fields:
 
 ```matlab
 "frequency"       % scalar, observation frequency                       
@@ -86,10 +88,12 @@ The current code takes as input data a measurement file in ``.mat`` format conta
 "maxProjBaseline" % scalar, maximum projected baseline (in units of the wavelength; formally  max(sqrt(u.^2+v.^2)))
 ```
 
-Instructions to extract single-channel measurment file from a Measurement Set are provided in the [Readme File](https://github.com/basp-group/uSARA/blob/main/pyxisMs2mat/README.md).
+To extract the measurement file from Measurement Set Tables (MS), you can use the utility Python script `$uSARA/pyxisMs2mat/pyxis_ms2mat.py`. Instructions are provided in the [Readme File](https://github.com/basp-group/uSARA/blob/main/pyxisMs2mat/README.md).
+
 Note that the measurement file is of the same format as the input expected in the library [Faceted Hypersara](https://github.com/basp-group/Faceted-HyperSARA) for wideband imaging. 
 ### Configuration (parameter) file
 The configuration file is a ``.json`` format file comprising all parameters to run the code.
+An example of the expected file is provided in `$uSARA/config/`. 
 
 ## Examples
 An example script is provided in the folder ``examples``. To launch these tests, please download the simulated measurements from this (temporary) [Dropbox link](https://www.dropbox.com/scl/fo/et0o4jl0d9twskrshdd7j/h?rlkey=gyl3fj3y7ca1tmoa1gav71kgg&dl=0) and move the folder ``simulated_measurements`` folder inside ``./examples``. Then change your current directory to ``./examples`` and launch the MATLAB scripts inside the folder. The results will be saved in the folder ``./results/3c353_dt8_seed0``. The groundtruth images of these measurements can be found in this (temporary) [Dropbox link](https://www.dropbox.com/scl/fo/mct058u0ww9301vrsgeqj/h?rlkey=hz8py389nay5jmqgzxz4knqja&dl=0).

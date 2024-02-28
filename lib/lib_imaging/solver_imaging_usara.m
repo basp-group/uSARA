@@ -76,7 +76,7 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
     end
     t_outer = toc(tStart_outer);
     fprintf('\n\n************************** Major cycle %d finished **************************\n', iter_outer);
-    fprintf('\nInfo: Major cycle %d took %g sec.', iter_outer, t_outer)
+    fprintf('\nINFO: Major cycle %d took %g sec.', iter_outer, t_outer)
 
     % save intermediate results
     RESIDUAL = DirtyIm - BWOp(FWOp(MODEL));
@@ -91,7 +91,7 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
 
     % check outer creteria
     im_relval = sqrt(sum((MODEL - MODEL_prevRe).^2, 'all') ./ (sum(MODEL.^2, 'all')+1e-10));
-    fprintf('\nInfo: Image relative variation of the major cycle %g', im_relval)
+    fprintf('\nINFO: Image relative variation of the major cycle %g', im_relval)
     if im_relval < param_algo.imVarOuterTol || ~param_algo.reweighting
         break;
     end

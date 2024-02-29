@@ -75,7 +75,7 @@ git submodule update --remote --merge # fetch and merge latest state of the subm
 
 ## Input Files
 ### Measurement file
-The current code takes as input data a measurement file in ``.mat`` format, located in `$uSARA/data/`, and containing the following fields:
+The current code takes as input data a measurement file in ``.mat`` format, and containing the following fields:
 
 ```matlab
 "frequency"       % scalar, observation frequency                       
@@ -87,6 +87,8 @@ The current code takes as input data a measurement file in ``.mat`` format, loca
 "nWimag"          % vector, sqrt of the imaging weights if available (Briggs or uniform), empty otherwise
 "maxProjBaseline" % scalar, maximum projected baseline (in units of the wavelength; formally  max(sqrt(u.^2+v.^2)))
 ```
+
+The sample measurement files are avaiable in this (temporary) [Dropbox link](https://www.dropbox.com/scl/fo/et0o4jl0d9twskrshdd7j/h?rlkey=gyl3fj3y7ca1tmoa1gav71kgg&dl=0).
 
 To extract the measurement file from Measurement Set Tables (MS), you can use the utility Python script `$uSARA/pyxisMs2mat/pyxis_ms2mat.py`. Instructions are provided in the [Readme File](https://github.com/basp-group/uSARA/blob/main/pyxisMs2mat/README.md).
 

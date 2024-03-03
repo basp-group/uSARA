@@ -14,13 +14,12 @@
         }
     },
 
-    {   "__comment": "General flags",
+    {   "__comment": "General",
 
         "flag": {  
             "flag_comment_1": "flags",  
             "flag_imaging": true,    
-            "flag_data_weighting": true,
-            "verbose": true
+            "flag_data_weighting": true
         },
 
         "other":{
@@ -29,7 +28,7 @@
         }
      },
      
-     {   "__comment": "Denoisers",
+     {   "__comment": "Denoiser",
 
         "usara": {  
             "denoiser_comment_1": "usara params",
@@ -40,11 +39,11 @@
         "usara_default": {
             "denoiser_comment_2": "usara default params", 
             "imMinInnerItr": 20,
-            "itrSave": 2000,
             "imMaxInnerItr": 2000,
             "imMaxOuterItr": 20,
             "imVarInnerTol": 1e-5,
-            "imVarOuterTol": 1e-4
+            "imVarOuterTol": 1e-4,
+            "itrSave": 2000
         }
     }
 ]

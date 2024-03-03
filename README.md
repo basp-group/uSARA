@@ -43,7 +43,7 @@ These modules contain codes associated with the following publications
 ### Cloning the project
 To clone the project with the required submodules, you may consider one of the following set of instructions.
 
-- Cloning the project using `https`:  you should run the following command
+- Cloning the project using `https`: you should run the following command
 ```bash
 git clone --recurse-submodules https://github.com/basp-group/uSARA.git
 ```
@@ -65,7 +65,7 @@ git clone --recurse-submodules git@github.com:basp-group/uSARA.git
 The full path to the uSARA repository is referred to as `$uSARA` in the rest of the documentation.
 
 ### Updating submodules (optional)
-- To update the submodules from your local repository `$uSARA`, run the follwing commands: 
+- To update the submodules from your local repository `$uSARA`, run the following commands: 
 ```bash
 git pull
 git submodule sync --recursive # update submodule address, in case the url has changed
@@ -88,11 +88,11 @@ The current code takes as input data a measurement file in ``.mat`` format, and 
 "maxProjBaseline" % scalar, maximum projected baseline (in units of the wavelength; formally  max(sqrt(u.^2+v.^2)))
 ```
 
-The sample measurement files are avaiable in this (temporary) [Dropbox link](https://www.dropbox.com/scl/fo/et0o4jl0d9twskrshdd7j/h?rlkey=gyl3fj3y7ca1tmoa1gav71kgg&dl=0).
+The sample measurement files are available in this (temporary) [Dropbox link](https://www.dropbox.com/scl/fo/et0o4jl0d9twskrshdd7j/h?rlkey=gyl3fj3y7ca1tmoa1gav71kgg&dl=0).
 
 To extract the measurement file from Measurement Set Tables (MS), you can use the utility Python script `$uSARA/pyxisMs2mat/pyxis_ms2mat.py`. Instructions are provided in the [Readme File](https://github.com/basp-group/uSARA/blob/main/pyxisMs2mat/README.md).
 
-Note that the measurement file is of the same format as the input expected in the library [Faceted Hypersara](https://github.com/basp-group/Faceted-HyperSARA) for wideband imaging. 
+Note that the measurement file is of the same format as the input expected in the library [Faceted-HyperSARA](https://github.com/basp-group/Faceted-HyperSARA) for wideband imaging. 
 ### Configuration (parameter) file
 The configuration file is a ``.json`` format file comprising all parameters to run the code.
 An example of the expected file is provided in `$uSARA/config/`. 

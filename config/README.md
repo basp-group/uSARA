@@ -1,6 +1,6 @@
 # Configuration (parameter) file
 
-The algorithms implemented in this repository are launched through the function ``run_imager()``. This function accepts a ``.json`` file where all the parameters required by different algorithms for imaging can be defined in this configuration file. A sample configuration file ``usara_sim.json`` is given in the folder ``$uSARA/config``. In this document, we'll provide explanations for all the fields in this file.
+The algorithms implemented in this repository are launched through the function ``run_imager()``. This function accepts a ``.json`` file where all the parameters required by different algorithms for imaging are defined. A sample configuration file ``usara_sim.json`` is given in the folder ``$uSARA/config``. In this document, we'll provide explanations for all the fields in this file.
 
 The configuration file is composed by three parts, i.e. Main, General and Denoiser. 
 

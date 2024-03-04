@@ -6,8 +6,8 @@ The configuration file is composed by three parts, i.e. Main, General and Denois
 
 1. Main
     - ``srcName``(optional): The name for the reconstruction task. If this field is empty, the script will take the file name given in the ``dataFile`` as the task's name.
-    - ``dataFile``: The path of the measurement file. The measurement file should be in ``.mat`` format containing fields discussed [here](https://github.com/basp-group/AIRI?tab=readme-ov-file#measurement-file).
-    - ``resultPath``(optional): The path where the result folder will be created. The script will create a folder in ``$resultPath`` with name ``${srcname}_${algorithm}_ID_${runID}_heuScale_${heuNoiseScale}_maxItr_${imMaxItr}``. The results will then be saved in this folder. If this field is empty, the default value is ``$AIRI/results``
+    - ``dataFile``: The path of the measurement file. The measurement file should be in ``.mat`` format containing fields discussed [here](https://github.com/basp-group/uSARA?tab=readme-ov-file#measurement-file).
+    - ``resultPath``(optional): The path where the result folder will be created. The script will create a folder in ``$resultPath`` with name ``${srcname}_${algorithm}_ID_${runID}_heuScale_${heuNoiseScale}_maxItr_${imMaxItr}``. The results will then be saved in this folder. If this field is empty, the default value is ``$uSARA/results``
     - ``algorithm``: The algorithm that will be used for imaging. It should be ``usara``.
     - ``imDimx``: The horizontal number of pixels in the final reconstructed image.
     - ``imDimy``: The vertical number of pixels in the final reconstructed image.
@@ -24,13 +24,13 @@ The configuration file is composed by three parts, i.e. Main, General and Denois
         - ``flag_data_weighting``(optional): Use the image weighting ``nWimag`` given in the measurement files or not. The default value is true.
 
     - ``other``
-        - ``dirProject``(optional): The path of the local AIRI repository. If this field is empty, the default value is MATLAB's current running path.
-        - ``ncpus``(optional): Number of cpus that will be used for imaging tasks. If it is empty, the script will try to use all the available CPUs.
+        - ``dirProject``(optional): The path of the local uSARA repository. If this field is empty, the default value is MATLAB's current running path.
+        - ``ncpus``(optional): Number of CPUs that will be used for imaging tasks. If it is empty, the script will try to use all the available CPUs.
 
 3. Denoiser
-    - ``uairi`` and ``uairi_default``
+    - ``usara`` and ``usara_default``
         
-        If the imaging ``algorithm``is specified as ``airi``, then the fields in the section will be loaded.
+        If the imaging ``algorithm``is specified as ``usara``, then the fields in the section will be loaded.
         - ``heuRegParamScale``(optional): The factor that will be applied to the regularisation parameter calculated based on the heuristic noise levels. The default value is ``1.0``.
         - ``reweighting``: Enable reweighting or not. If it is enabled, the regularisation term will become reweighted l1 norm to promote sparsity. The weights will be updated in the major cycle. The default value is true.
         - ``imMinInnerItr``(optional): The minimum number of iterations of the inner imaging cycle. The default value is ``10``.

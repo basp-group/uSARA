@@ -14,7 +14,7 @@
 
 ## Description
 
-``uSARA`` is the unconstrained counterpart of the ``SARA`` algorithm. It is underpinned by the forward-backward algorithmic structure for solving inverse imaging problem. This repository provides a straightforward MATLAB implementation of  ``uSARA`` to solve small scale monochromatic astronomical imaging problem. The details of the algorithm are discussed in the following papers.
+``uSARA`` is the unconstrained counterpart of the ``SARA`` algorithm. It is underpinned by the forward-backward algorithmic structure for solving inverse imaging problem. This repository provides a straightforward MATLAB implementation of ``uSARA`` to solve small scale monochromatic astronomical imaging problem. The details of the algorithm are discussed in the following papers.
 
 >[1] Terris, M., Dabbech, A., Tang, C., & Wiaux, Y. (2023). [Image reconstruction algorithms in radio interferometry: From handcrafted to learned regularization denoisers](https://doi.org/10.1093/mnras/stac2672). *MNRAS, 518*(1), 604-622.
 >

@@ -98,7 +98,14 @@ The configuration file is a ``.json`` format file comprising all parameters to r
 An example `usara_sim.json` is provided in `$uSARA/config/`. A detailed description about the fields in the configuration file is provided [here](https://github.com/basp-group/uSARA/blob/main/config/README.md).
 
 ## Usage and Example
-The algorithm can be launched through function `run_imager()`. The mandatory input argument of this function is the path of configuration file discussed in the above section. It also accepts 10 optional name-argument pairs which will overwrite corresponding fields in the configuration file.
+The algorithm can be launched through function `run_imager()`. The mandatory input argument of this function is the path of configuration file discussed in the above section. 
+
+```MATLAB
+pth_config = ['.', filesep, 'config', filesep, 'usara_sim.json'];
+run_imager(pth_config)
+```
+
+It also accepts 10 optional name-argument pairs which will overwrite corresponding fields in the configuration file.
 
 ```MATLAB
 run_imager(pth_config, ... % path of the configuration file

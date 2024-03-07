@@ -11,8 +11,8 @@ The configuration file is composed by three parts, i.e. Main, General and Denois
     - ``algorithm``: Imaging algorithm, must be set to ``usara``.
     - ``imDimx``: Horizontal dimension of the estimated image.
     - ``imDimy``: Vertical dimension of the estimated image.
-    - ``imPixelSize``(optional): Pixel size of the estimated image in the unit of arcsec. If empty,  its  value is inferred from ``superresolution`` such that ``imPixelSize = (180 / pi) * 3600 / (superresolution * 2 * maxProjBaseline)``.
-    - ``superresolution``(optional):  Ratio between the spatial bandwidth of the image estimate and the spatial bandwidth of the observations (recommended to be in [1.5, 2.5]. Default: ``1.0``.
+    - ``imPixelSize``(optional): Pixel size of the estimated image in the unit of arcsec. If empty, its value is inferred from ``superresolution`` such that ``imPixelSize = (180 / pi) * 3600 / (superresolution * 2 * maxProjBaseline)``.
+    - ``superresolution``(optional): Ratio between the spatial bandwidth of the image estimate and the spatial bandwidth of the observations (recommended to be in [1.5, 2.5]). Default: ``1.0``.
     - ``groundtruth``(optional): Path of the groundtruth image. The file must be in ``.fits `` format, and is used to compute reconstruction metrics. 
     - ``runID``(optional): Identification number of the current task. The default value is ``0``.
 
@@ -32,13 +32,13 @@ The configuration file is composed by three parts, i.e. Main, General and Denois
         
         If the imaging ``algorithm``is specified as ``usara``, then the fields in the section will be loaded.
         - ``heuRegParamScale``(optional): Adjusting factor applied to the regularisation parameter calculated based on the heuristic noise levels. Default: ``1.0``.
-        - ``reweighting``: Enable reweighting algorithm.  Default:  ``true``.
-        - ``imMinInnerItr``(optional): Minimum number of iterations in the forward-backward algorithm (inner loop). Default:  ``10``.
-        - ``imMaxInnerItr``(optional): Maximum number of iterations in the forward-backward algorithm (inner loop).  Default: ``2000``.
-        - ``imVarInnerTol``(optional): Tolerance on the relative variation of the estimate in the forward-backward algorithm (inner loop) to indicate convergence.  Default: ``1e-4``.
+        - ``reweighting``: Enable reweighting algorithm.  Default: ``true``.
+        - ``imMinInnerItr``(optional): Minimum number of iterations in the forward-backward algorithm (inner loop). Default: ``10``.
+        - ``imMaxInnerItr``(optional): Maximum number of iterations in the forward-backward algorithm (inner loop). Default: ``2000``.
+        - ``imVarInnerTol``(optional): Tolerance on the relative variation of the estimation in the forward-backward algorithm (inner loop) to indicate convergence. Default: ``1e-4``.
         - ``imMaxOuterItr``(optional): Maximum number of iterations in the reweighting algorithm (outer loop).  Default: ``10``.
-        - ``imVarOuterTol``(optional): Tolerance on the relative variation of the estimate in the reweighting algorithm (outer loop) to indicate convergence. Default: ``1e-4``.
-        - ``itrSave``(optional): Interval of iterations for saving intermediate results.  Default: ``500``.
+        - ``imVarOuterTol``(optional): Tolerance on the relative variation of the estimation in the reweighting algorithm (outer loop) to indicate convergence. Default: ``1e-4``.
+        - ``itrSave``(optional): Interval of iterations for saving intermediate results. Default: ``500``.
 
 
     

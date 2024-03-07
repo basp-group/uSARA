@@ -1,44 +1,44 @@
 # Configuration (parameter) file
 
-The algorithms implemented in this repository are launched through the function ``run_imager()``. This function accepts a ``.json`` file where all the parameters required by different algorithms for imaging are defined. A sample configuration file ``usara_sim.json`` is given in the folder ``$uSARA/config``. In this document, we'll provide explanations for all the fields in this file.
+The algorithms implemented in this repository are launched through the function ``run_imager()``. This function accepts a ``.json`` file where all the parameters required the algorithm are defined. A sample configuration file ``usara_sim.json`` is given in the folder ``$uSARA/config``. In this document, we'll provide explanations for all the fields in this file.
 
 The configuration file is composed by three parts, i.e. Main, General and Denoiser. 
 
 1. Main
-    - ``srcName``(optional): The name for the reconstruction task. If this field is empty, the script will take the file name given in the ``dataFile`` as the task's name.
-    - ``dataFile``: The path of the measurement file. The measurement file should be in ``.mat`` format containing fields discussed [here](https://github.com/basp-group/uSARA?tab=readme-ov-file#measurement-file).
-    - ``resultPath``(optional): The path where the result folder will be created. The script will create a folder in ``$resultPath`` with name ``${srcname}_${algorithm}_ID_${runID}_heuScale_${heuNoiseScale}_maxItr_${imMaxItr}``. The results will then be saved in this folder. If this field is empty, the default value is ``$uSARA/results``
-    - ``algorithm``: The algorithm that will be used for imaging. It should be ``usara``.
-    - ``imDimx``: The horizontal number of pixels in the final reconstructed image.
-    - ``imDimy``: The vertical number of pixels in the final reconstructed image.
-    - ``imPixelSize``(optional): The pixel size of the reconstructed image in the unit of arcsec. If this field is empty, the script will infer the value from ``superresolution`` with equation ``imPixelSize = (180 / pi) * 3600 / (superresolution * 2 * maxProjBaseline)``. The value of ``maxProjBaseline`` is given in the measurement file.
-    - ``superresolution``(optional): The ratio between the expected maximum projection baseline and the one given in the measurement file. The default value is ``1.0``.
-    - ``groundtruth``(optional): The path of the groundtruth image. The image should be in ``.fits `` format. If the path is given, the script will calculate the signal-to-noise ratio (SNR) between the reconstructed images and the groundtruth image and print the SNR result in the log.
-    - ``runID``(optional): The identification number of the current task. The default value is ``0``.
+    - ``srcName``(optional): Experiment/target source name tag, used in the output filenames. If empty, the script will take the filename given in the ``dataFile`.
+    - ``dataFile``: Path to the measurement (data) file. The file must be in ``.mat`` format containing fields discussed [here](https://github.com/basp-group/uSARA?tab=readme-ov-file#measurement-file).
+    - ``resultPath``(optional): Path to the output files. The script will create a folder in ``$resultPath`` with name ``${srcname}_${algorithm}_ID_${runID}_heuScale_${heuNoiseScale}_maxItr_${imMaxItr}``. Default: ``$uSARA/results``
+    - ``algorithm``: Imaging algorithm, must be set to ``usara``.
+    - ``imDimx``: Horizontal dimension of the estimated image.
+    - ``imDimy``: Vertical dimension of the estimated image.
+    - ``imPixelSize``(optional): Pixel size of the estimated image in the unit of arcsec. If empty,  its  value is inferred from ``superresolution`` such that ``imPixelSize = (180 / pi) * 3600 / (superresolution * 2 * maxProjBaseline)``.
+    - ``superresolution``(optional):  Ratio between the spatial bandwidth of the image estimate and the spatial bandwidth of the observations (recommended to be in [1.5, 2.5]. Default: ``1.0``.
+    - ``groundtruth``(optional): Path of the groundtruth image. The file must be in ``.fits `` format, and is used to compute reconstruction metrics. 
+    - ``runID``(optional): Identification number of the current task. The default value is ``0``.
 
     The values of the entries in Main will be overwritten if corresponding name-value arguments are fed into the function ``run_imager()``.
 
 2. General
     - ``flag``
-        - ``flag_imaging``(optional): Run imaging algorithms or not. If the value is false, then the script will only generate the back-projected (dirty) images and the PSF. The default value is true.
-        - ``flag_data_weighting``(optional): Use the image weighting ``nWimag`` given in the measurement files or not. The default value is true.
+        - ``flag_imaging``(optional): Enable imaging. If ``false``, the back-projected data (dirty image) and corresponding PSF are generated. Default: ``true``.
+        - ``flag_data_weighting``(optional): Use the data-weighting scheme, with the weights ``nWimag`` given in the measurement file. Default: ``true``.
 
     - ``other``
-        - ``dirProject``(optional): The path of the local uSARA repository. If this field is empty, the default value is MATLAB's current running path.
-        - ``ncpus``(optional): Number of CPUs that will be used for imaging tasks. If it is empty, the script will try to use all the available CPUs.
+        - ``dirProject``(optional): Path to project repository. Default: MATLAB's current running path.
+        - ``ncpus``(optional): Number of CPUs used for imaging task. If empty, the script will make use of the available CPUs.
 
 3. Denoiser
     - ``usara`` and ``usara_default``
         
         If the imaging ``algorithm``is specified as ``usara``, then the fields in the section will be loaded.
-        - ``heuRegParamScale``(optional): The factor that will be applied to the regularisation parameter calculated based on the heuristic noise levels. The default value is ``1.0``.
-        - ``reweighting``: Enable reweighting or not. If it is enabled, the regularisation term will become reweighted l1 norm to promote sparsity. The weights will be updated in the major cycle. The default value is true.
-        - ``imMinInnerItr``(optional): The minimum number of iterations of the inner imaging cycle. The default value is ``10``.
-        - ``imMaxInnerItr``(optional): The minimum number of iterations of the inner imaging cycle. The default value is ``2000``.
-        - ``imMaxOuterItr``(optional): The minimum number of iterations of the major reweighting cycle. The default value is ``10``.
-        - ``imVarInnerTol``(optional): The image variation tolerance of the inner imaging cycle. If the relative variation of the reconstructed images from two consecutive iterations is smaller than the value of ``imVarInnerTol`` and the algorithm has run more iterations than ``imMinInnerItr``, then the inner imaging cycle will be ended. The default value is ``1e-4``.
-        - ``imVarOuterTol``(optional): The image variation tolerance of the outer reweighting cycle. If the relative variation of the reconstructed images from two consecutive major iterations is smaller than the value of ``imVarOuterTol``, the imaging process will be ended. The default value is ``1e-4``.
-        - ``itrSave``(optional): The interval of iterations for saving intermediate results. The default number is ``500``.
+        - ``heuRegParamScale``(optional): Adjusting factor applied to the regularisation parameter calculated based on the heuristic noise levels. Default: ``1.0``.
+        - ``reweighting``: Enable reweighting algorithm.  Default:  ``true``.
+        - ``imMinInnerItr``(optional): Minimum number of iterations in the forward-backward algorithm (inner loop). Default:  ``10``.
+        - ``imMaxInnerItr``(optional): Maximum number of iterations in the forward-backward algorithm (inner loop).  Default: ``2000``.
+        - ``imVarInnerTol``(optional): Tolerance on the relative variation of the estimate in the forward-backward algorithm (inner loop) to indicate convergence.  Default: ``1e-4``.
+        - ``imMaxOuterItr``(optional): Maximum number of iterations in the reweighting algorithm (outer loop).  Default: ``10``.
+        - ``imVarOuterTol``(optional): Tolerance on the relative variation of the estimate in the reweighting algorithm (outer loop) to indicate convergence. Default: ``1e-4``.
+        - ``itrSave``(optional): Interval of iterations for saving intermediate results.  Default: ``500``.
 
 
     

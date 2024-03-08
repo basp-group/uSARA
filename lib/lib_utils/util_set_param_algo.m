@@ -58,7 +58,7 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
     else
         param_algo.waveletDistribution = param_general.waveletDistribution;
     end
-    if ~isfield(param_general,'nFacetsPerDim') || length(param_algo.nFacetsPerDim)~=2 || ~isscalar(param_algo.nFacetsPerDim(1)) || ~isscalar(param_algo.nFacetsPerDim(2))
+    if ~isfield(param_general,'nFacetsPerDim') || length(param_general.nFacetsPerDim)~=2 || ~isscalar(param_general.nFacetsPerDim(1)) || ~isscalar(param_general.nFacetsPerDim(2))
         param_algo.nFacetsPerDim = [2,2];
     else
         param_algo.nFacetsPerDim = ceil(abs(param_general.nFacetsPerDim));

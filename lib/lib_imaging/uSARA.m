@@ -10,19 +10,21 @@ MODEL_prevRe = MODEL;
 DualL1 = [];
 iter_inner = 1;
 iter_outer = 1;
-weights = cell(numel((param_algo.dict.basis)) , 1);
-for i = 1 : numel(weights)
-    weights{i} = 1.0;
-end
-waveletNoiseFloor = param_algo.waveletNoiseFloor;
 % calculate dirty image
 DirtyIm = BWOp(DATA);
 
 % prepare SARA sparsity op
-nlevel = 4
+nlevel = 4;
 basis = {'db1', 'db2', 'db3', 'db4', 'db5', 'db6', 'db7', 'db8', 'self'};
 [Psi, Psit] = wavelet_operators_distributed_bases(basis, nlevel, param_imaging.imDims(1), param_imaging.imDims(2));
 hpc_cluster = util_set_parpool(min(numel(basis), feature('numcores')), 'local');
+
+% init reweighting scheme
+weights = cell(numel(basis) , 1);
+for i = 1 : numel(weights)
+    weights{i} = 1.0;
+end
+waveletNoiseFloor = param_algo.waveletNoiseFloor;
 
 % uSARA specific
 % param_prox: lambda, verbose, ObjTolProx, MaxItrProx

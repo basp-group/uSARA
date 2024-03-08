@@ -77,16 +77,16 @@ git submodule update --remote --merge # fetch and merge latest state of the subm
 ### Measurement file
 The current code takes as input data a measurement file in ``.mat`` format, and containing the following fields:
 
-```matlab
-"frequency"       % scalar, observation frequency                       
-"y"               % vector, measurements/data (Stokes I)
-"u"               % vector, u coordinate (in units of the wavelength)
-"v"               % vector, v coordinate (in units of the wavelength)
-"w"               % vector, w coordinate (in units of the wavelength)                       
-"nW"              % vector, inverse of the standard deviation
-"nWimag"          % vector, sqrt of the imaging weights if available (Briggs or uniform), empty otherwise
-"maxProjBaseline" % scalar, maximum projected baseline (in units of the wavelength; formally  max(sqrt(u.^2+v.^2)))
-```
+ ``` MATLAB 
+   "y"               %% vector; data (Stokes I)
+   "u"               %% vector; u coordinate (in units of the wavelength)
+   "v"               %% vector; v coordinate (in units of the wavelength)
+   "w"               %% vector; w coordinate (in units of the wavelength)
+   "nW"              %% vector; inverse of the noise standard deviation 
+   "nWimag"          %% vector; square root of the imaging weights if available (Briggs or uniform), empty otherwise
+   "frequency"       %% scalar; channel frequency
+   "maxProjBaseline" %% scalar; maximum projected baseline (in units of the wavelength; formally  max(sqrt(u.^2+v.^2)))
+   ```
 
 An example measurement file ``3c353_meas_dt_1_seed_0.mat`` is provided in the folder ``$uSARA$/data``. The full synthetic test set used in [1] can be found in this (temporary) [Dropbox link](https://www.dropbox.com/scl/fo/et0o4jl0d9twskrshdd7j/h?rlkey=gyl3fj3y7ca1tmoa1gav71kgg&dl=0).
 
@@ -108,16 +108,16 @@ run_imager(pth_config)
 It also accepts 10 optional name-argument pairs which will overwrite corresponding fields in the configuration file.
 
 ```MATLAB
-run_imager(pth_config, ... % path of the configuration file
-    'srcName', srcName, ... % name for the reconstruction task
-    'dataFile', dataFile, ... % path of the measurement file
-    'resultPath', resultPath, ... % path where the result folder will be created
-    'algorithm', algorithm, ... % algorithm that will be used for imaging
-    'imDimx', imDimx, ... % horizontal number of pixels in the final reconstructed image
-    'imDimy', imDimy, ... % vertical number of pixels in the final reconstructed image
-    'imPixelSize', imPixelSize, ... % pixel size of the reconstructed image in the unit of arcsec
-    'superresolution', superresolution, ... % ratio between the expected maximum projection baseline and the one given in the measurement file
-    'groundtruth', groundtruth, ... % path of the groundtruth image
+run_imager(pth_config, ... %% path of the configuration file
+    'srcName', srcName, ... %% name for the reconstruction task
+    'dataFile', dataFile, ... %% path of the measurement file
+    'resultPath', resultPath, ... %% path where the result folder will be created
+    'algorithm', algorithm, ... %% algorithm that will be used for imaging
+    'imDimx', imDimx, ... %% horizontal number of pixels in the final reconstructed image
+    'imDimy', imDimy, ... %% vertical number of pixels in the final reconstructed image
+    'imPixelSize', imPixelSize, ... %% pixel size of the reconstructed image in the unit of arcsec
+    'superresolution', superresolution, ... %% ratio between the expected maximum projection baseline and the one given in the measurement file
+    'groundtruth', groundtruth, ... %% path of the groundtruth image
     'runID', runID ... % identification number of the current task
   )
 ```

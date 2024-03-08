@@ -38,7 +38,7 @@ The configuration file is composed by three parts, i.e. Main, General and Denois
         - ``imMaxOuterItr``(optional): Maximum number of iterations in the reweighting algorithm (outer loop).  Default: ``10``.
         - ``imVarOuterTol``(optional): Tolerance on the relative variation of the estimation in the reweighting algorithm (outer loop) to indicate convergence. Default: ``1e-4``.
         - ``itrSave``(optional): Interval of iterations for saving intermediate results. Default: ``500``.
-        - ``waveletDistribution``(optional): The way to distribute wavelet coefficients. It has to be chosen from ``"basis"`` and ``"facet"``. Default: ``"facet"``.
+        - ``waveletDistribution``(optional): The way to distribute wavelet coefficients. It has to be chosen from ``"basis"`` and ``"facet"``. Default: ``"basis"``.
         - ``nFacetsPerDim``(optional): Number of wavelet facets on each image dimension. Default: ``[2,2]``.
         - ``facetDimLowerBound``(optional): The smallest size of wavelet facets on each image dimension. Default: ``256``.
 

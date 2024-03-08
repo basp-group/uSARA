@@ -1,4 +1,4 @@
-function [Psi, Psit] = op_p_sp_wlt_basis(basis, nlevel, Ny, Nx)
+function [Psi, Psit] = wavelet_operators_distributed_bases(basis, nlevel, Ny, Nx)
     % Resturns the operator to the sparsity wavelet basis passed as argument
     % Each basis is considered to be distributed to a different node.
     %

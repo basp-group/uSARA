@@ -8,7 +8,6 @@ The configuration file is composed by three parts, i.e. Main, General and Denois
     - ``srcName``(optional): Experiment/target source name tag, used in the output filenames. If empty, the script will take the filename given in the ``dataFile`.
     - ``dataFile``: Path to the measurement (data) file. The file must be in ``.mat`` format containing fields discussed [here](https://github.com/basp-group/uSARA?tab=readme-ov-file#measurement-file).
     - ``resultPath``(optional): Path to the output files. The script will create a folder in ``$resultPath`` with name ``${srcname}_${algorithm}_ID_${runID}_heuScale_${heuNoiseScale}_maxItr_${imMaxItr}``. Default: ``$uSARA/results``
-    - ``algorithm``: Imaging algorithm, must be set to ``usara``.
     - ``imDimx``: Horizontal dimension of the estimated image.
     - ``imDimy``: Vertical dimension of the estimated image.
     - ``imPixelSize``(optional): Pixel size of the estimated image in the unit of arcsec. If empty, its value is inferred from ``superresolution`` such that ``imPixelSize = (180 / pi) * 3600 / (superresolution * 2 * maxProjBaseline)``.
@@ -39,6 +38,9 @@ The configuration file is composed by three parts, i.e. Main, General and Denois
         - ``imMaxOuterItr``(optional): Maximum number of iterations in the reweighting algorithm (outer loop).  Default: ``10``.
         - ``imVarOuterTol``(optional): Tolerance on the relative variation of the estimation in the reweighting algorithm (outer loop) to indicate convergence. Default: ``1e-4``.
         - ``itrSave``(optional): Interval of iterations for saving intermediate results. Default: ``500``.
+        - ``waveletDistribution``(optional): The way to distribute wavelet coefficients. It has to be chosen from ``"basis"`` and ``"facet"``. Default: ``"facet"``.
+        - ``nFacetsPerDim``(optional): Number of wavelet facets on each image dimension. Default: ``[2,2]``.
+        - ``facetDimLowerBound``(optional): The smallest size of wavelet facets on each image dimension. Default: ``256``.
 
 
     

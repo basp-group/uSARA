@@ -15,7 +15,6 @@ arguments
     NameValueArgs.srcName (1,:) {mustBeText}
     NameValueArgs.dataFile (1,:) {mustBeFile}
     NameValueArgs.resultPath (1,:) {mustBeText}
-    NameValueArgs.algorithm (1,:) {mustBeMember(NameValueArgs.algorithm,{'usara'})}
     NameValueArgs.imDimx (1,1) {mustBePositive, mustBeInteger}
     NameValueArgs.imDimy (1,1) {mustBePositive, mustBeInteger}
     NameValueArgs.imPixelSize (1,1) {mustBePositive}
@@ -50,9 +49,6 @@ end
 if isfield(NameValueArgs, 'imDimy')
     main.imDimy = NameValueArgs.imDimy;
 end
-if isfield(NameValueArgs, "algorithm")
-    main.algorithm = NameValueArgs.algorithm;
-end
 if isfield(NameValueArgs, 'imPixelSize')
     main.imPixelSize = NameValueArgs.imPixelSize;
 end
@@ -78,17 +74,11 @@ disp(param_flag)
 param_other = cell2struct(struct2cell(config{2, 1}.other), fieldnames(config{2, 1}.other));
 disp(param_other)
 
-% solver
-switch main.algorithm
-    case 'usara'
-        param_solver = cell2struct(struct2cell(config{3, 1}.usara), fieldnames(config{3, 1}.usara));
-        param_solver_default = cell2struct(struct2cell(config{3, 1}.usara_default), fieldnames(config{3, 1}.usara_default));
-        param_solver = cell2struct([struct2cell(param_solver); struct2cell(param_solver_default)], ...
-            [fieldnames(param_solver); fieldnames(param_solver_default)]);
-    otherwise
-        error("Algorithm %s not found\n", main.algorithm)
-end
-param_solver.algorithm = main.algorithm;
+% solver, usara
+param_solver = cell2struct(struct2cell(config{3, 1}.usara), fieldnames(config{3, 1}.usara));
+param_solver_default = cell2struct(struct2cell(config{3, 1}.usara_default), fieldnames(config{3, 1}.usara_default));
+param_solver = cell2struct([struct2cell(param_solver); struct2cell(param_solver_default)], ...
+    [fieldnames(param_solver); fieldnames(param_solver_default)]);
 disp(param_solver)
 
 % full param list

@@ -1,4 +1,4 @@
-function [MODEL, DualL1] = denoiser_prox_usara(MODEL, DualL1, Y, Psi, Psit, weights, param)
+function [MODEL, DualL1] = denoiser_prox_weighted_l1(MODEL, DualL1, Y, Psi, Psit, weights, param)
 % PROJ_L1 - Proximal operator with L1 norm
 % sol = solver_prox_L1_full_image(x, lambda, param) solves:
 %   min_{z} 0.5*||x - z||_2^2 + lambda * ||Psit (xA + z)||_1

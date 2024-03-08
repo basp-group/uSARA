@@ -1,4 +1,4 @@
-function RESULTS = solver_imaging_usara(DATA, FWOp, BWOp, param_imaging, param_algo)
+function RESULTS = uSARA(DATA, FWOp, BWOp, param_imaging, param_algo)
 %% ************************************************************************
 % *************************************************************************
 % Imaging: forward-backward algorithm
@@ -19,8 +19,10 @@ waveletNoiseFloor = param_algo.waveletNoiseFloor;
 DirtyIm = BWOp(DATA);
 
 % prepare SARA sparsity op
-[Psi, Psit] = op_p_sp_wlt_basis(param_algo.dict.basis, param_algo.dict.nlevel, param_imaging.imDims(1), param_imaging.imDims(2));
-hpc_cluster = util_set_parpool(min(numel(param_algo.dict.basis), feature('numcores')), 'local');
+nlevel = 4
+basis = {'db1', 'db2', 'db3', 'db4', 'db5', 'db6', 'db7', 'db8', 'self'};
+[Psi, Psit] = wavelet_operators_distributed_bases(basis, nlevel, param_imaging.imDims(1), param_imaging.imDims(2));
+hpc_cluster = util_set_parpool(min(numel(basis), feature('numcores')), 'local');
 
 % uSARA specific
 % param_prox: lambda, verbose, ObjTolProx, MaxItrProx
@@ -34,8 +36,10 @@ fprintf('\n*************************************************\n')
 
 iter = 1;
 tStart_total = tic;
+% reweighting cycle
 for iter_outer = 1 : param_algo.imMaxOuterItr
     tStart_outer = tic;
+    % forward-backward imaging cycle
     for iter_inner = 1 : param_algo.imMaxInnerItr
         tStart_iter = tic;
         MODEL_prev = MODEL;
@@ -47,7 +51,7 @@ for iter_outer = 1 : param_algo.imMaxOuterItr
 
         % denoising step
         tStart_den =tic;
-        [MODEL, DualL1] = denoiser_prox_usara(MODEL, DualL1, Xhat, Psi, Psit, weights, param_prox);
+        [MODEL, DualL1] = denoiser_prox_weighted_l1(MODEL, DualL1, Xhat, Psi, Psit, weights, param_prox);
         t_den = toc(tStart_den);
 
         t_iter = toc(tStart_iter);

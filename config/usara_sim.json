@@ -4,7 +4,6 @@
             "srcName": [],
             "dataFile": "./data/3c353_meas_dt_1_seed_0.mat",
             "resultPath": [],
-            "algorithm": "usara",
             "imDimx": 512,
             "imDimy": 512,
             "imPixelSize": [],
@@ -43,7 +42,10 @@
             "imMaxOuterItr": 20,
             "imVarInnerTol": 1e-5,
             "imVarOuterTol": 1e-4,
-            "itrSave": 2000
+            "itrSave": 2000,
+            "waveletDistribution": "basis",
+            "nFacetsPerDim": [2,2],
+            "facetDimLowerBound": 256
         }
     }
 ]

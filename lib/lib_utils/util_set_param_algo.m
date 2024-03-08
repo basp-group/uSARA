@@ -1,7 +1,4 @@
 function param_algo = util_set_param_algo(param_general, heuristic, peak_est, numMeas)
-
-    % algorithm
-    param_algo.algorithm = param_general.algorithm;
     
     % max number of inner iterations
     if ~isfield(param_general,'imMaxInnerItr') || ~isscalar(param_general.imMaxInnerItr)
@@ -46,12 +43,6 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
         fprintf('\nINFO: heuristic noise level after scaling: %g', param_algo.heuristic);
     end
 
-    % dictionary
-    dict.nlevel = 4;
-    dict.basis = {'db1', 'db2', 'db3', 'db4', 'db5', 'db6', 'db7', 'db8', 'self'};
-    dict.filter_length = [2, 4, 6, 8, 10, 12, 14, 16, 0];
-    param_algo.dict = dict;
-
     % step size
     param_algo.gamma = 1.98 / param_general.measOpNorm;
     fprintf('\nINFO: step size (gamma): %g.', param_algo.gamma)
@@ -60,6 +51,23 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
     param_algo.lambda = param_algo.heuristic / 3.0 / param_algo.gamma; % 9 wavelet bases
     param_algo.waveletNoiseFloor = heuristic / 3.0; % decouple from noise scaling factor
     fprintf('\nINFO: regularisation param (lambda): %g.', param_algo.lambda)
+
+    % wavelet distrucution
+    if ~isfield(param_general,'waveletDistribution') || ~ismember(param_general.waveletDistribution, {'basis','facet'})
+        param_algo.waveletDistribution = 'basis';
+    else
+        param_algo.waveletDistribution = param_general.waveletDistribution;
+    end
+    if ~isfield(param_general,'nFacetsPerDim') || length(param_algo.nFacetsPerDim)~=2 || ~isscalar(param_algo.nFacetsPerDim(1)) || ~isscalar(param_algo.nFacetsPerDim(2))
+        param_algo.nFacetsPerDim = [2,2];
+    else
+        param_algo.nFacetsPerDim = ceil(abs(param_general.nFacetsPerDim));
+    end
+    if ~isfield(param_general,'facetDimLowerBound') || ~isscalar(param_general.facetDimLowerBound)
+        param_algo.facetDimLowerBound = 256;
+    else
+        param_algo.facetDimLowerBound = ceil(abs(param_general.facetDimLowerBound));
+    end
 
     % dual-FB parameters
     param_prox.ObjTolProx = 1e-4;

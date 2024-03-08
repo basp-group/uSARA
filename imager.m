@@ -101,15 +101,12 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
     end
     
     %% Imaging
-    switch param_algo.algorithm
-        case 'usara'
-            RESULTS = solver_imaging_usara(DATA, FWOp, BWOp, param_imaging, param_algo);
-    end
+    RESULTS = uSARA(DATA, FWOp, BWOp, param_imaging, param_algo);
 
     %% Save final results
-    fitswrite(RESULTS.MODEL, fullfile(param_imaging.resultPath, [param_algo.algorithm, '_model_image.fits']))
-    fitswrite(RESULTS.RESIDUAL, fullfile(param_imaging.resultPath, [param_algo.algorithm, '_residual_dirty_image.fits']))
-    fitswrite(RESULTS.RESIDUAL ./ PSFPeak, fullfile(param_imaging.resultPath, [param_algo.algorithm, '_normalised_residual_dirty_image.fits']))
+    fitswrite(RESULTS.MODEL, fullfile(param_imaging.resultPath, 'usara_model_image.fits'))
+    fitswrite(RESULTS.RESIDUAL, fullfile(param_imaging.resultPath, 'usara_residual_dirty_image.fits'))
+    fitswrite(RESULTS.RESIDUAL ./ PSFPeak, fullfile(param_imaging.resultPath, 'usara_normalised_residual_dirty_image.fits'))
     
     %% Final metrics
     fprintf('\nINFO: The standard deviation of the final residual dirty image %g', std(RESULTS.RESIDUAL, 0, 'all'))

@@ -17,11 +17,8 @@ function param_imaging = util_set_param_imaging(param_general, param_algo, imDim
         [~, srcname, ~] = fileparts(pathData);
     end
     % set subfolder name
-    switch param_general.algorithm
-        case 'usara'
-            subFolerName = [srcname, '_uSARA_ID_',num2str(runID), ...
+    subFolerName = [srcname, '_uSARA_ID_',num2str(runID), ...
                 '_heuRegScale_', num2str(param_algo.heuRegParamScale)];
-    end
     % set full path
     param_imaging.resultPath = fullfile(resultPath, subFolerName);
     if ~exist(param_imaging.resultPath, 'dir') 

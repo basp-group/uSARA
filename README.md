@@ -112,7 +112,6 @@ run_imager(pth_config, ... % path of the configuration file
     'srcName', srcName, ... % name for the reconstruction task
     'dataFile', dataFile, ... % path of the measurement file
     'resultPath', resultPath, ... % path where the result folder will be created
-    'algorithm', algorithm, ... % algorithm that will be used for imaging
     'imDimx', imDimx, ... % horizontal number of pixels in the final reconstructed image
     'imDimy', imDimy, ... % vertical number of pixels in the final reconstructed image
     'imPixelSize', imPixelSize, ... % pixel size of the reconstructed image in the unit of arcsec

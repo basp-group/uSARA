@@ -5,7 +5,7 @@ The algorithms implemented in this repository are launched through the function 
 The configuration file is composed by three parts, i.e. Main, General and Denoiser. 
 
 1. Main
-    - ``srcName``(optional): Experiment/target source name tag, used in the output filenames. If empty, the script will take the filename given in the ``dataFile`.
+    - ``srcName``(optional): Experiment/target source name tag, used in the output filenames. If empty, the script will take the filename given in the ``dataFile``.
     - ``dataFile``: Path to the measurement (data) file. The file must be in ``.mat`` format containing fields discussed [here](https://github.com/basp-group/uSARA?tab=readme-ov-file#measurement-file).
     - ``resultPath``(optional): Path to the output files. The script will create a folder in ``$resultPath`` with name ``${srcname}_${algorithm}_ID_${runID}_heuScale_${heuNoiseScale}_maxItr_${imMaxItr}``. Default: ``$uSARA/results``
     - ``imDimx``: Horizontal dimension of the estimated image.

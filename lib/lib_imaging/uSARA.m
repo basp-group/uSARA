@@ -88,7 +88,7 @@ for itr_outer = 1 : param_algo.imMaxOuterItr
         % update iteration counter
         itr = itr + 1;
     end
-    t_outer = 1;%toc(t_outer);
+    t_outer = toc(t_outer);
 
     fprintf('\n\n************************** Major cycle %d finished **************************\n', itr_outer);
     fprintf('\nINFO: Re-weighting iteration %d completed in %g sec.', itr_outer, t_outer)

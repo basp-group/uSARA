@@ -50,7 +50,7 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
     dirac = sparse(floor(imDimy./2) + 1, floor(imDimx./2) + 1, 1, imDimy, imDimx);
     PSF = adjoint_measop(measop(full(dirac)));
     PSFPeak = max(PSF,[],'all');  clear dirac;
-    fprintf('\nINFO: normalisation factor in RI: PSF peak value (normalisation factor in RI): %g',PSFPeak);
+    fprintf('\nINFO: normalisation factor in RI, PSF peak value: %g',PSFPeak);
 
     %% Compute back-projected data 
     dirty = adjoint_measop(DATA);
@@ -75,10 +75,9 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
     param_algo = util_set_param_algo(param_general, heuristic);
     param_imaging = util_set_param_imaging(param_general, param_algo, [imDimy,imDimx], pathData, runID);
     
-    % save dirty image and PSF
+    %% save dirty image and PSF
     fitswrite(single(PSF), fullfile(param_imaging.resultPath, 'PSF.fits')); clear PSF;
     fitswrite(single(dirty./PSFPeak), fullfile(param_imaging.resultPath, 'dirty.fits')); 
-    
     
     %% INFO
     fprintf("\n________________________________________________________________\n")
@@ -88,26 +87,22 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
     disp(param_imaging)
     fprintf("________________________________________________________________\n")
 
-    if ~param_imaging.flag_imaging
-        fprintf('\nTHE END\n')
-        return
-    end
-    
-    %% uSARA Imaging
-    [MODEL,RESIDUAL] = usara(dirty, measop, adjoint_measop, param_imaging, param_algo);
+    if param_imaging.flag_imaging
+        %% uSARA Imaging
+        [MODEL,RESIDUAL] = usara(dirty, measop, adjoint_measop, param_imaging, param_algo);
 
-    %% Save final results
-    fitswrite(MODEL, fullfile(param_imaging.resultPath, 'usara_model_image.fits')) % model estimate
-    fitswrite(RESIDUAL, fullfile(param_imaging.resultPath, 'usara_residual_dirty_image.fits')) % back-projected residual data
-    fitswrite(RESIDUAL ./ PSFPeak, fullfile(param_imaging.resultPath, 'usara_normalised_residual_dirty_image.fits')) % normalised back-projected residual data
-    
-    %% Final metrics
-    fprintf('\nINFO: The standard deviation of the final residual dirty image %g', std(RESIDUAL, 0, 'all'))
-    if isfield(param_imaging,'groundtruth') && ~isempty(param_imaging.groundtruth) && isfile(param_imaging.groundtruth)
-        gdth_img = fitsread(param_imaging.groundtruth);
-        snr = 20*log10( norm(gdth_img(:)) / norm(MODEL(:) - gdth_img(:)) );
-        fprintf('\nINFO: The signal-to-noise ratio of the final reconstructed image %f dB', snr)
+        %% Save final results
+        fitswrite(MODEL, fullfile(param_imaging.resultPath, 'usara_model_image.fits')) % model estimate
+        fitswrite(RESIDUAL, fullfile(param_imaging.resultPath, 'usara_residual_dirty_image.fits')) % back-projected residual data
+        fitswrite(RESIDUAL ./ PSFPeak, fullfile(param_imaging.resultPath, 'usara_normalised_residual_dirty_image.fits')) % normalised back-projected residual data
+        fprintf("\nFits files saved.")
+        %% Final metrics
+        fprintf('\nINFO: The standard deviation of the final residual dirty image %g', std(RESIDUAL, 0, 'all'))
+        if isfield(param_imaging,'groundtruth') && ~isempty(param_imaging.groundtruth) && isfile(param_imaging.groundtruth)
+            gdth_img = fitsread(param_imaging.groundtruth);
+            snr = 20*log10( norm(gdth_img(:)) / norm(MODEL(:) - gdth_img(:)) );
+            fprintf('\nINFO: The signal-to-noise ratio of the final reconstructed image %f dB', snr)
+        end
     end
-
     fprintf('\nTHE END\n')
     end

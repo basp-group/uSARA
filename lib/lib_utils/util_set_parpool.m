@@ -12,7 +12,8 @@ function hpc_cluster = util_set_parpool(ncores_data, parcluster_name)
     % -------
     % hpc_cluster
     %     [description]
-
+ 
+    delete(gcp("nocreate"));
     numworkers = ncores_data;
 
     hpc_cluster = parcluster(parcluster_name);
@@ -29,10 +30,4 @@ function hpc_cluster = util_set_parpool(ncores_data, parcluster_name)
     % % start the matlabpool with the requested workers
     parpool(hpc_cluster, numworkers);
     
-    % wavelet 
-    dwtmode('zpd', 'nodisp');
-    spmd
-        dwtmode('zpd', 'nodisp');
-    end
-
 end

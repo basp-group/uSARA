@@ -1,4 +1,4 @@
-function param_algo = util_set_param_algo(param_general, heuristic, peak_est, numMeas)
+function param_algo = util_set_param_algo(param_general, heuristic)
     
     % max number of inner iterations
     if ~isfield(param_general,'imMaxInnerItr') || ~isscalar(param_general.imMaxInnerItr)
@@ -52,28 +52,31 @@ function param_algo = util_set_param_algo(param_general, heuristic, peak_est, nu
     param_algo.waveletNoiseFloor = heuristic / 3.0; % decouple from noise scaling factor
     fprintf('\nINFO: regularisation param (lambda): %g.', param_algo.lambda)
 
-    % wavelet distrucution
+    % wavelet distribution
     if ~isfield(param_general,'waveletDistribution') || ~ismember(param_general.waveletDistribution, {'basis','facet'})
         param_algo.waveletDistribution = 'basis';
     else
         param_algo.waveletDistribution = param_general.waveletDistribution;
     end
-    if ~isfield(param_general,'nFacetsPerDim') || length(param_general.nFacetsPerDim)~=2 || ~isscalar(param_general.nFacetsPerDim(1)) || ~isscalar(param_general.nFacetsPerDim(2))
-        param_algo.nFacetsPerDim = [2,2];
-    else
-        param_algo.nFacetsPerDim = ceil(abs(param_general.nFacetsPerDim));
-    end
-    if ~isfield(param_general,'facetDimLowerBound') || ~isscalar(param_general.facetDimLowerBound)
-        param_algo.facetDimLowerBound = 256;
-    else
-        param_algo.facetDimLowerBound = ceil(abs(param_general.facetDimLowerBound));
-    end
 
-    % dual-FB parameters
+    if strcmp(param_general.waveletDistribution,'facet')
+        if ~isfield(param_general,'facetDimLowerBound') || ~isscalar(param_general.facetDimLowerBound)
+            param_algo.facetDimLowerBound = 256;
+        else
+            param_algo.facetDimLowerBound = ceil(abs(param_general.facetDimLowerBound));
+        end
+        if ~isfield(param_general,'nFacetsPerDim') || length(param_general.nFacetsPerDim)~=2 || ~isscalar(param_general.nFacetsPerDim(1)) || ~isscalar(param_general.nFacetsPerDim(2))
+            param_algo.nFacetsPerDim = [2,2];
+        else
+            param_algo.nFacetsPerDim = ceil(abs(param_general.nFacetsPerDim));
+        end
+    end
+    % dual-FB (prox) parameters 
+    param_prox.verbose = false; 
     param_prox.ObjTolProx = 1e-4;
     param_prox.MaxItrProx = 200;
-    param_prox.gamma_lambda = param_algo.heuristic / 3.0;
-    fprintf('\nINFO: soft-thresholding param (gamma x lambda): %g.', param_prox.gamma_lambda)
+    param_prox.SoftThres =  param_algo.lambda * param_algo.gamma;
+    fprintf('\nINFO: soft-thresholding param (gamma x lambda): %g.', param_prox.SoftThres)
     param_algo.param_prox = param_prox;
 
     % reweighting

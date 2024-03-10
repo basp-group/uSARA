@@ -1,71 +1,81 @@
 function [MODEL, DualL1] = denoiser_prox_weighted_l1(MODEL, DualL1, Y, Psi, Psit, weights, param)
 % PROJ_L1 - Proximal operator with L1 norm
-% sol = solver_prox_L1_full_image(x, lambda, param) solves:
-%   min_{z} 0.5*||x - z||_2^2 + lambda * ||Psit (xA + z)||_1
-% References:
-% [1] M.J. Fadili and J-L. Starck, "Monotone operator splitting for
-% optimization problems in sparse recovery" , IEEE ICIP, Cairo,
-% Egypt, 2009.
-% [2] Amir Beck and Marc Teboulle, "A Fast Iterative Shrinkage-Thresholding
-% Algorithm for Linear Inverse Problems",  SIAM Journal on Imaging Sciences
-% 2 (2009), no. 1, 183--202.
-
+% Parameters
+% ----------
+% MODEL : 2D matrix
+%     model estimate - primal variable
+% DualL1 : vector
+%     dual variable (in the wavelet domain)
+% Y : 2D matrix
+%     point at which the prox. is computed
+% Psi: cell of function handle
+%     direct operator: wavelet tranform  (9 bases, including identity) 
+% Psit: cell of function handle
+%     adjoint operator: inverse wavelet transform 
+% weights: vector
+%     weights involved in the re-weighting algorithm
+% param: struct
+% Returns
 %% Optional input arguments -- >  to be updated
 if ~isfield(param, 'verbose'), param.verbose = true; end
 if ~isfield(param, 'ObjTolProx'), param.ObjTolProx = 1e-4; end
 if ~isfield(param, 'MaxItrProx'), param.MaxItrProx = 200; end
 
 %%  Initializations
-lambda = param.gamma_lambda;
-
-% dual variable
-if isempty(DualL1)
-    DualL1 = cell(numel(Psit), 1);
-    for basis = 1 : numel(Psi)
-        DualL1{basis} = Psit{basis}(MODEL);
-    end
-end
-
-% algo params
-itr = 1;
-objective = -1;
+% soft thresholding param
+SoftThres = param.SoftThres;
 
 % stopping crit.
 ObjTolProx = param.ObjTolProx;
 MaxItrProx = param.MaxItrProx;
 
-% Useful functions
-Id_proxL1 = @(z, T) z - (sign(z) .* max(abs(z)-T, 0));
+% Useful function
+Id_proxL1 = @(z, T) z - (sign(z) .* max(abs(z) - T, 0));
+
+% init dual variable
+nBases = numel(Psit);
+if isempty(DualL1)
+    DualL1 = cell(nBases, 1);
+    for iBasis = 1 : nBases
+        DualL1{iBasis} = Psit{iBasis}(MODEL);
+    end
+end
+
+% init algo 
+itr = 1;
+objective = -1;
 
 %% dual-FB
 while 1
 
-    % update primal
-    PsiDual = 0;
-    parfor basis = 1 : numel(Psi)
-        PsiDual = PsiDual + Psi{basis}(DualL1{basis});
+    %% update primal
+    PsiDualL1 = 0;
+    parfor iBasis = 1 : nBases
+        PsiDualL1 = PsiDualL1 + Psi{iBasis}(DualL1{iBasis});
     end
-    MODEL = max(Y - PsiDual , 0); % FW
-    nrmL2 = 0.5 * sum((MODEL - Y).^2, 'all');
+    MODEL = max(Y - PsiDualL1 , 0); % positivity
+    nrmL2 = 0.5 * sum((MODEL - Y).^2, 'all'); 
 
-    % update dual
-    nrmL1 = 0;
-    nrmL1_raw = 0;
-    parfor basis = 1 : numel(Psit)
-        PsitIm = Psit{basis}(MODEL); % apply \Psi^\dagger
-        DualL1{basis} = Id_proxL1(DualL1{basis}+PsitIm, lambda*weights{basis});
-        nrmL1 = nrmL1 + sum(abs(weights{basis}.*PsitIm), 'all');
-        nrmL1_raw = nrmL1_raw + sum(abs(PsitIm), 'all');
+    %% update dual
+    nrmL1 = zeros(nBases, 1);
+    parfor iBasis = 1 : nBases
+        PsitModel = Psit{iBasis}(MODEL); % apply \Psi^\dagger
+        DualL1{iBasis} = Id_proxL1(DualL1{iBasis} + PsitModel, SoftThres*weights{iBasis});
+        nrmL1(iBasis) = sum(abs(weights{iBasis}.*PsitModel), 'all');
     end
+    nrmL1 = sum(nrmL1);
 
     %% Stopping criterion
     prev_objective = objective(itr);
     itr = itr + 1;
-    objective(itr) = nrmL2 + lambda * nrmL1;
+    objective(itr) = nrmL2 + SoftThres * nrmL1;
     relative_objective = abs(objective(itr)-prev_objective) / objective(itr);
-
-    fprintf('\n\tProx Iter %i, prox_fval = %e, rel_fval = %e, l1norm = %e, l1norm_w = %e', itr-1, objective(end), relative_objective, nrmL1_raw, nrmL1);
+    if param.verbose
+        fprintf('\n\tProx Iter %i, prox_fval = %e, rel_fval = %e,  l1norm_w = %e', itr-1, objective(end), relative_objective, nrmL1);
+    end
     if (relative_objective < ObjTolProx) || itr >= MaxItrProx
+        fprintf('\n\tProx converged: Iter %i, rel_fval = %e', itr-1, relative_objective);
+
         break;
     end
 

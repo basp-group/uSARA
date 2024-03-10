@@ -1,47 +1,47 @@
-function [Psi, Psit] = wavelet_operators_distributed_bases(basis, nlevel, Ny, Nx)
+function [PsiFun, PsitFun ] = wavelet_operators(wvltBases, wvltlevel, ImDims)
     % Resturns the operator to the sparsity wavelet basis passed as argument
     % Each basis is considered to be distributed to a different node.
     %
     % Parameters
     % ----------
-    % basis : cell[string]
+    % wvltBases : cell[string]
     %     Cell of strigs containing the names of the wavelets to be used, eg:
     %     {'db1', 'db2', 'self'}.
-    % nlevel : int
+    % wvltlevel : int
     %     Decomposition level.
-    % Ny : int
+    % ImDims : int
     %     Image size.
-    % Nx : int
-    %     Flag to reset the sizes used for reconstruction.
     %
     % Returns
     % -------
-    % Psi : cell{anonymous functions}
+    % PsiFun : cell{anonymous functions}
     %     Function handles for direct operator.
-    % Psit : cell{anonymous function}
+    % PsitFun : cell{anonymous function}
     %     Function handles for adjoint operator.
     %
 
+    Ny = ImDims(1);
+    Nx = ImDims(2);
     dwtmode('zpd');
     
     %% sparsity operator definition
     % construct a sting to repesent the desired inline function
     
-    Psit = cell(length(basis), 1);
-    for i = 1:length(basis)
+    PsitFun = cell(length(wvltBases), 1);
+    for i = 1:length(wvltBases)
         f = '@(x) [';
-        if strcmp(basis{i}, 'self')
+        if strcmp(wvltBases{i}, 'self')
             f = sprintf('%s x(:);', f);
         else
-            f = sprintf('%s wavedec2(x, %d, ''%s'')'';', f, nlevel, basis{i});
+            f = sprintf('%s wavedec2(x, %d, ''%s'')'';', f, wvltlevel, wvltBases{i});
         end
-        f = sprintf('%s]/sqrt(%d)', f, length(basis));
-        Psit{i} = eval(f);
+        f = sprintf('%s]/sqrt(%d)', f, length(wvltBases));
+        PsitFun{i} = eval(f);
     end
     
     % for Psi it is a bit more complicated, we need to do some extra
     % precomputations
-    Psi = make_Psi(basis, nlevel, Ny, Nx);
+    PsiFun = make_Psi(wvltBases, wvltlevel, Ny, Nx);
     
     end
     

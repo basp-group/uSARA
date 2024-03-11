@@ -109,15 +109,15 @@ It also accepts 10 optional name-argument pairs which will overwrite correspondi
 
 ```MATLAB
 run_imager(pth_config, ... %% path of the configuration file
-    'srcName', srcName, ... %% name for the reconstruction task
+    'srcName', srcName, ... %% name of the target src used for output filenames
     'dataFile', dataFile, ... %% path of the measurement file
     'resultPath', resultPath, ... %% path where the result folder will be created
     'imDimx', imDimx, ... %% horizontal number of pixels in the final reconstructed image
     'imDimy', imDimy, ... %% vertical number of pixels in the final reconstructed image
-    'imPixelSize', imPixelSize, ... %% pixel size of the reconstructed image in the unit of arcsec
-    'superresolution', superresolution, ... %% ratio between the expected maximum projection baseline and the one given in the measurement file
-    'groundtruth', groundtruth, ... %% path of the groundtruth image
-    'runID', runID ... %% identification number of the current task
+    'imPixelSize', imPixelSize, ... %% pixel size of the reconstructed image in the unit of arcsec 
+    'superresolution', superresolution, ... %% used if pixel size not provided
+    'groundtruth', groundtruth, ... %% path of the groundtruth image when available
+    'runID', runID ... %% identification number of the imaging run used for output filenames 
   )
 ```
 

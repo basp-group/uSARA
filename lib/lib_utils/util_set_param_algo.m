@@ -49,7 +49,7 @@ function param_algo = util_set_param_algo(param_general, heuristic_noise)
     
     % heuristic parameters
     param_algo.lambda = param_algo.heuristic / 3.0 / param_algo.gamma; % 9 wavelet bases
-    param_algo.waveletNoiseFloor = heuristic_noise / 3.0; % decouple from noise scaling factor
+    param_algo.waveletNoiseFloor = param_algo.heuristic / 3.0; % decouple from noise scaling factor
     fprintf('\nINFO: regularisation param (lambda): %g.', param_algo.lambda)
 
     % wavelet distribution

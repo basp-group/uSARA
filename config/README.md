@@ -40,7 +40,7 @@ The configuration file is composed by three parts, i.e. Main, General and Denois
         - ``itrSave``(optional): Interval of iterations for saving intermediate results. Default: ``500``.
         - ``waveletDistribution``(optional): The way to distribute wavelet coefficients. It has to be chosen from ``"basis"`` and ``"facet"``. Default: ``"basis"``.
         - ``nFacetsPerDim``(optional): Number of wavelet facets on each image dimension. Default: ``[2,2]``.
-        - ``facetDimLowerBound``(optional): The smallest size of wavelet facets on each image dimension. Default: ``256``.
+        - ``facetDimLowerBound``(optional): The smallest size of wavelet facets on each image dimension. Default: ``512``.
 
 
     

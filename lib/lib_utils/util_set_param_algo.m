@@ -61,7 +61,7 @@ function param_algo = util_set_param_algo(param_general, heuristic)
 
     if strcmp(param_general.waveletDistribution,'facet')
         if ~isfield(param_general,'facetDimLowerBound') || ~isscalar(param_general.facetDimLowerBound)
-            param_algo.facetDimLowerBound = 256;
+            param_algo.facetDimLowerBound = 512;
         else
             param_algo.facetDimLowerBound = ceil(abs(param_general.facetDimLowerBound));
         end

@@ -128,7 +128,6 @@ fprintf('********** END OF ALGORITHM **********')
 fprintf('\n**************************************\n')
 
 %% Final variables
-delete(myparpool)
 FINAL_MODEL = MODEL ;
 FINAL_RESIDUAL = dirty - adjoint_measop(measop(MODEL)); 
 

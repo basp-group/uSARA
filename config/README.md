@@ -5,15 +5,15 @@ The algorithms implemented in this repository are launched through the function 
 The configuration file is composed by three parts, i.e. Main, General and Denoiser. 
 
 1. Main
-    - ``srcName``(optional): Experiment/target source name tag, used in the output filenames. If empty, the script will take the filename given in the ``dataFile``.
+    - ``srcName``(optional): Experiment/target source name tag, used in the output filenames. 
     - ``dataFile``: Path to the measurement (data) file. The file must be in ``.mat`` format containing fields discussed [here](https://github.com/basp-group/uSARA?tab=readme-ov-file#measurement-file).
     - ``resultPath``(optional): Path to the output files. The script will create a folder in ``$resultPath`` with name ``${srcname}_${algorithm}_ID_${runID}_heuScale_${heuNoiseScale}_maxItr_${imMaxItr}``. Default: ``$uSARA/results``
     - ``imDimx``: Horizontal dimension of the estimated image.
     - ``imDimy``: Vertical dimension of the estimated image.
     - ``imPixelSize``(optional): Pixel size of the estimated image in the unit of arcsec. If empty, its value is inferred from ``superresolution`` such that ``imPixelSize = (180 / pi) * 3600 / (superresolution * 2 * maxProjBaseline)``.
-    - ``superresolution``(optional): Ratio between the spatial bandwidth of the image estimate and the spatial bandwidth of the observations (recommended to be in [1.5, 2.5]). Default: ``1.0``.
+    - ``superresolution``(optional): Imaging super-resolution factor, used when the pixel size is not provided (recommended to be in [1.5, 2.5]). Default: ``1.0``.
     - ``groundtruth``(optional): Path of the groundtruth image. The file must be in ``.fits `` format, and is used to compute reconstruction metrics. 
-    - ``runID``(optional): Identification number of the current task. The default value is ``0``.
+    - ``runID``(optional): Identification number of the current task used in the output filenames.
 
     The values of the entries in Main will be overwritten if corresponding name-value arguments are fed into the function ``run_imager()``.
 

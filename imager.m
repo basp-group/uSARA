@@ -100,8 +100,8 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
         fprintf('\nINFO: The standard deviation of the final residual dirty image %g', std(RESIDUAL, 0, 'all'))
         if isfield(param_imaging,'groundtruth') && ~isempty(param_imaging.groundtruth) && isfile(param_imaging.groundtruth)
             gdth_img = fitsread(param_imaging.groundtruth);
-            snr = 20*log10( norm(gdth_img(:)) / norm(MODEL(:) - gdth_img(:)) );
-            fprintf('\nINFO: The signal-to-noise ratio of the final reconstructed image %f dB', snr)
+            rsnr = 20*log10( norm(gdth_img(:)) / norm(MODEL(:) - gdth_img(:)) );
+            fprintf('\nINFO: The signal-to-noise ratio of the final reconstructed image %f dB', rsnr)
         end
     end
     fprintf('\nTHE END\n')

@@ -1,4 +1,4 @@
-function param_algo = util_set_param_algo(param_general, heuristic)
+function param_algo = util_set_param_algo(param_general, heuristic_noise)
     
     % max number of inner iterations
     if ~isfield(param_general,'imMaxInnerItr') || ~isscalar(param_general.imMaxInnerItr)
@@ -37,7 +37,7 @@ function param_algo = util_set_param_algo(param_general, heuristic)
         param_algo.heuRegParamScale = param_general.heuRegParamScale;
     end
     % heuristic noise level
-    param_algo.heuristic = heuristic;
+    param_algo.heuristic = heuristic_noise;
     if param_algo.heuRegParamScale ~= 1.0
         param_algo.heuristic = param_algo.heuristic * param_algo.heuRegParamScale;
         fprintf('\nINFO: heuristic noise level after scaling: %g', param_algo.heuristic);
@@ -49,7 +49,7 @@ function param_algo = util_set_param_algo(param_general, heuristic)
     
     % heuristic parameters
     param_algo.lambda = param_algo.heuristic / 3.0 / param_algo.gamma; % 9 wavelet bases
-    param_algo.waveletNoiseFloor = heuristic / 3.0; % decouple from noise scaling factor
+    param_algo.waveletNoiseFloor = heuristic_noise / 3.0; % decouple from noise scaling factor
     fprintf('\nINFO: regularisation param (lambda): %g.', param_algo.lambda)
 
     % wavelet distribution
@@ -61,7 +61,7 @@ function param_algo = util_set_param_algo(param_general, heuristic)
 
     if strcmp(param_general.waveletDistribution,'facet')
         if ~isfield(param_general,'facetDimLowerBound') || ~isscalar(param_general.facetDimLowerBound)
-            param_algo.facetDimLowerBound = 256;
+            param_algo.facetDimLowerBound = 512;
         else
             param_algo.facetDimLowerBound = ceil(abs(param_general.facetDimLowerBound));
         end
@@ -75,7 +75,7 @@ function param_algo = util_set_param_algo(param_general, heuristic)
     param_prox.verbose = false; 
     param_prox.ObjTolProx = 1e-4;
     param_prox.MaxItrProx = 200;
-    param_prox.SoftThres =  param_algo.lambda * param_algo.gamma;
+    param_prox.SoftThres =  param_algo.lambda * param_algo.gamma; % soft thresholding param
     fprintf('\nINFO: soft-thresholding param (gamma x lambda): %g.', param_prox.SoftThres)
     param_algo.param_prox = param_prox;
 

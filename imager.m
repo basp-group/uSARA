@@ -29,7 +29,7 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
     % src/test name tag for outputs filename
     if isfield(param_general, 'srcName') && ~isempty(param_general.srcName)
           srcname = param_general.srcName;
-    else, srcname = "test";
+    else, srcname = 'test';
     end
     if ~isempty(runID), srcname = [srcname,'_',num2str(runID)];
     end

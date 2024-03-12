@@ -112,8 +112,11 @@ function imager(pathData, imPixelSize, imDimx, imDimy, param_general, runID)
         fitswrite(RESIDUAL, fullfile(param_imaging.resultPath, 'usara_residual_dirty_image.fits')) % back-projected residual data
         fitswrite(RESIDUAL ./ PSFPeak, fullfile(param_imaging.resultPath, 'usara_normalised_residual_dirty_image.fits')) % normalised back-projected residual data
         fprintf("\nFits files saved.")
+
         %% Final metrics
         fprintf('\nINFO: The standard deviation of the final residual dirty image %g', std(RESIDUAL, 0, 'all'))
+        fprintf('\nINFO: The standard deviation of the normalised final residual dirty image %g', std(RESIDUAL, 0, 'all') / PSFPeak)
+        fprintf('\nINFO: The ratio between the norm of the residual and the dirty image: ||residual|| / || dirty || =  %g', norm(RESIDUAL(:))./norm(dirty(:)))
         if isfield(param_imaging,'groundtruth') && ~isempty(param_imaging.groundtruth) && isfile(param_imaging.groundtruth)
             gdth_img = fitsread(param_imaging.groundtruth);
             rsnr = 20*log10( norm(gdth_img(:)) / norm(MODEL(:) - gdth_img(:)) );

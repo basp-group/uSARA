@@ -7,9 +7,10 @@
   - [Dependencies](#dependencies)
   - [Installation](#installation)
     - [Cloning the project](#cloning-the-project)
+    - [Updating submodules (optional)](#updating-submodules-optional)
   - [Input Files](#input-files)
     - [Measurement file](#measurement-file)
-    - [Configuration file](#configuration-file)
+    - [Configuration file](#configuration-parameter-file)
   - [Usage and Example](#usage-and-example)
 
 ## Description
@@ -47,7 +48,12 @@ To clone the project with the required submodules, you may consider one of the f
 ```bash
 git clone --recurse-submodules https://github.com/basp-group/uSARA.git
 ```
-- Cloning the project using SSH key for GitHub: you should first edit the `.gitmodules` file, replacing the `https` addresses with the `git@github.com` counterpart as follows: 
+- Cloning the project using SSH key for GitHub: you should run the following command first
+```bash
+git clone git@github.com:basp-group/AIRI.git
+```
+
+Next, please edit the `.gitmodules` file, replacing the `https` addresses with the `git@github.com` counterpart as follows: 
 
 ```bash
 [submodule "lib/RI-measurement-operator"]
@@ -57,11 +63,8 @@ git clone --recurse-submodules https://github.com/basp-group/uSARA.git
 	path = lib/RI-measurement-operator
 	url = git@github.com/basp-group/RI-measurement-operator.git
 ```
-You can then clone the repository with all the submodules as follows:
+Finally, please follow the instructions in the next session [Updating submodules (optional)](#updating-submodules-optional) to clone the submodules into the repository's path.
 
-```bash
-git clone --recurse-submodules git@github.com:basp-group/uSARA.git
-```
 The full path to the uSARA repository is referred to as `$uSARA` in the rest of the documentation.
 
 ### Updating submodules (optional)

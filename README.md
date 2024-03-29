@@ -17,9 +17,9 @@
 
 ``uSARA`` is the unconstrained counterpart of the ``SARA`` algorithm. It is underpinned by the forward-backward algorithmic structure for solving inverse imaging problem. This repository provides a straightforward MATLAB implementation of ``uSARA`` to solve small scale monochromatic astronomical imaging problem. The details of the algorithm are discussed in the following papers.
 
->[1] Terris, M., Dabbech, A., Tang, C., & Wiaux, Y. (2023). [Image reconstruction algorithms in radio interferometry: From handcrafted to learned regularization denoisers](https://doi.org/10.1093/mnras/stac2672). *MNRAS, 518*(1), 604-622.
+>[1] Terris, M., Dabbech, A., Tang, C., & Wiaux, Y., [Image reconstruction algorithms in radio interferometry: From handcrafted to learned regularization denoisers](https://doi.org/10.1093/mnras/stac2672). *MNRAS, 518*(1), 604-622.
 >
->[2] Repetti, A., & Wiaux, Y. (2020). [A forward-backward algorithm for reweighted procedures: Application to radio-astronomical imaging](https://doi.org/10.1109/ICASSP40776.2020.9053284). *ICASSP 2020-2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)* (pp. 1434-1438). IEEE.
+>[2] Repetti, A., & Wiaux, Y., [A forward-backward algorithm for reweighted procedures: Application to radio-astronomical imaging](https://doi.org/10.1109/ICASSP40776.2020.9053284). *IEEE ICASSP 2020*, 1434-1438, 2020.
 
 ## Dependencies 
 
@@ -30,13 +30,13 @@ This repository relies on two auxiliary submodules :
 
 These modules contain codes associated with the following publications
 
->[3] Fessler, J. A., & Sutton, B. P. (2003). Nonuniform fast Fourier transforms using min-max interpolation. *IEEE TSP, 51*(2), 560-574.
+>[3] Fessler, J. A., & Sutton, B. P., Nonuniform fast Fourier transforms using min-max interpolation. *IEEE TSP*, 51(2), 560-574, 2003.
 >
->[4] Onose, A., Dabbech, A., & Wiaux, Y. (2017). [An accelerated splitting algorithm for radio-interferometric imaging: when natural and uniform weighting meet](http://dx.doi.org/10.1093/mnras/stx755). *MNRAS, 469*(1), 938-949.
+>[4] Onose, A., Dabbech, A., & Wiaux, Y., [An accelerated splitting algorithm for radio-interferometric imaging: when natural and uniform weighting meet](http://dx.doi.org/10.1093/mnras/stx755). *MNRAS*, 469(1), 938-949, 2017.
 >
->[5] Dabbech, A., Wolz, L., Pratley, L., McEwen, J. D., & Wiaux, Y. (2017). [The w-effect in interferometric imaging: from a fast sparse measurement operator to superresolution](http://dx.doi.org/10.1093/mnras/stx1775). *MNRAS, 471*(4), 4300-4313.
+>[5] Dabbech, A., Wolz, L., Pratley, L., McEwen, J. D., & Wiaux, Y., [The w-effect in interferometric imaging: from a fast sparse measurement operator to superresolution](http://dx.doi.org/10.1093/mnras/stx1775). *MNRAS*, 471(4), 4300-4313, 2017.
 > 
->[6] Průša, Z. D. E. N. Ě. K. (2012). Segmentwise discrete wavelet transform (Doctoral dissertation, Ph. D. thesis, Brno University of Technology, Brno).
+>[6] Průša, Z. D. E. N. Ě. K., Segmentwise discrete wavelet transform, Ph. D. thesis, Brno University of Technology, Brno, 2012.
 
 ## Installation
 

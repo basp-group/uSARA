@@ -59,9 +59,9 @@ Next, please edit the `.gitmodules` file, replacing the `https` addresses with t
 [submodule "lib/RI-measurement-operator"]
 	path = lib/RI-measurement-operator
 	url = git@github.com/basp-group/RI-measurement-operator.git
-[submodule "lib/RI-measurement-operator"]
-	path = lib/RI-measurement-operator
-	url = git@github.com/basp-group/RI-measurement-operator.git
+[submodule "lib/SARA-dictionary"]
+	path = lib/SARA-dictionary
+	url = git@github.com/basp-group/SARA-dictionary.git
 ```
 Finally, please follow the instructions in the next session [Updating submodules (optional)](#updating-submodules-optional) to clone the submodules into the repository's path.
 

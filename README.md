@@ -76,20 +76,30 @@ git submodule update --init --recursive # update the content of the submodules
 git submodule update --remote --merge # fetch and merge latest state of the submodule
 ```
 
+### MATLAB
+MATLAB can be donloaded from the official website of [MathWorks](https://www.mathworks.com/products/matlab.html). To run this repository, your MATLAB version should be higher than R2019b. Specifically, if you'd like to use the facet parallisation mode, then the version should be higher than R2022b. The toolboxes needed to be installed are shown below.
+
+```
+Wavelet Toolbox
+Parallel Computing Toolbox
+```
+
+You may need a proper licence to use MATLAB and required toolboxs.
+
 ## Input Files
 ### Measurement file
 The current code takes as input data a measurement file in ``.mat`` format, and containing the following fields:
 
- ``` MATLAB 
-   "y"               %% vector; data (Stokes I)
-   "u"               %% vector; u coordinate (in units of the wavelength)
-   "v"               %% vector; v coordinate (in units of the wavelength)
-   "w"               %% vector; w coordinate (in units of the wavelength)
-   "nW"              %% vector; inverse of the noise standard deviation 
-   "nWimag"          %% vector; square root of the imaging weights if available (Briggs or uniform), empty otherwise
-   "frequency"       %% scalar; channel frequency
-   "maxProjBaseline" %% scalar; maximum projected baseline (in units of the wavelength; formally  max(sqrt(u.^2+v.^2)))
-   ```
+``` MATLAB 
+  "y"               %% vector; data (Stokes I)
+  "u"               %% vector; u coordinate (in units of the wavelength)
+  "v"               %% vector; v coordinate (in units of the wavelength)
+  "w"               %% vector; w coordinate (in units of the wavelength)
+  "nW"              %% vector; inverse of the noise standard deviation 
+  "nWimag"          %% vector; square root of the imaging weights if available (Briggs or uniform), empty otherwise
+  "frequency"       %% scalar; channel frequency
+  "maxProjBaseline" %% scalar; maximum projected baseline (in units of the wavelength; formally  max(sqrt(u.^2+v.^2)))
+```
 
 An example measurement file ``3c353_meas_dt_1_seed_0.mat`` is provided in the folder ``$uSARA$/data``. The full synthetic test set used in [1] can be found in this (temporary) [Dropbox link](https://www.dropbox.com/scl/fo/et0o4jl0d9twskrshdd7j/h?rlkey=gyl3fj3y7ca1tmoa1gav71kgg&dl=0).
 

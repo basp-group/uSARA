@@ -1,6 +1,6 @@
-[submodule "lib/RI-measurement-operator"]
-	path = lib/RI-measurement-operator
-	url = https://github.com/basp-group/RI-measurement-operator.git
 [submodule "lib/SARA-dictionary"]
 	path = lib/SARA-dictionary
 	url = https://github.com/basp-group/SARA-dictionary.git
+[submodule "lib/RI-measurement-operator"]
+	path = lib/RI-measurement-operator
+	url = https://github.com/basp-group/RI-measurement-operator.git

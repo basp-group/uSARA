@@ -77,14 +77,12 @@ git submodule update --remote --merge # fetch and merge latest state of the subm
 ```
 
 ### MATLAB
-MATLAB can be donloaded from the official website of [MathWorks](https://www.mathworks.com/products/matlab.html). To run this repository, your MATLAB version should be higher than R2019b. Specifically, if you'd like to use the facet parallisation mode, then the version should be higher than R2022b. The toolboxes needed to be installed are shown below.
+MATLAB can be downloaded from the official website of [MathWorks](https://www.mathworks.com/products/matlab.html). To run this repository, your MATLAB version should be higher than R2019b. Specifically, if you'd like to use the facet parallisation mode, then the version should be higher than R2022b. The below toolboxes are required:
 
 ```
 Wavelet Toolbox
 Parallel Computing Toolbox
 ```
-
-You may need a proper licence to use MATLAB and required toolboxs.
 
 ## Input Files
 ### Measurement file

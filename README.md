@@ -116,7 +116,7 @@ pth_config = ['.', filesep, 'config', filesep, 'usara_sim.json'];
 run_imager(pth_config)
 ```
 
-It also accepts 10 optional name-argument pairs which will overwrite corresponding fields in the configuration file.
+It also accepts 9 optional name-argument pairs which will overwrite corresponding fields in the configuration file.
 
 ```MATLAB
 run_imager(pth_config, ... %% path of the configuration file

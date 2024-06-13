@@ -1,6 +1,6 @@
 function param_imaging = util_set_param_imaging(param_general, heuRegParamScale)
 % set subfolder name
-subFolerName = [param_general.srcName, '-uSARA_heuRegScale_', num2str(heuRegParamScale)];
+subFolerName = strcat(param_general.srcName, '-uSARA_heuRegScale_', num2str(heuRegParamScale));
 % set full path
 param_imaging.resultPath = fullfile(param_general.resultPath, subFolerName);
 if ~exist(param_imaging.resultPath, 'dir')

@@ -21,6 +21,8 @@
 >
 >[2] Repetti, A., & Wiaux, Y., [A forward-backward algorithm for reweighted procedures: Application to radio-astronomical imaging](https://doi.org/10.1109/ICASSP40776.2020.9053284). *IEEE ICASSP 2020*, 1434-1438, 2020.
 
+We also provide a [tutorial](./tutorial_usara_matlab.mlx) in the format of MATLAB live script as a quick start guide about how to run the scripts in this repository, from setting up the environemnt to imaging RI measurements.
+
 ## Dependencies 
 
 This repository relies on two auxiliary submodules :

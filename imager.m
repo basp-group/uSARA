@@ -28,9 +28,6 @@ end
 if ~isfield(param_general, 'srcName') || isempty(param_general.srcName)
     [~, param_general.srcName, ~] = fileparts(pathData);
 end
-if ~isempty(runID)
-    param_general.srcName = strcat(param_general.srcName, '_runID_', num2str(runID));
-end
 
 %% Measurement operator
 % Set pixel size
@@ -94,10 +91,10 @@ end
 
 %% Set parameters for imaging and algorithms
 param_algo = util_set_param_algo(param_general, heuristic_noise);
-param_imaging = util_set_param_imaging(param_general, param_algo.heuRegParamScale);
+param_imaging = util_set_param_imaging(param_general, param_algo.heuRegParamScale, runID);
 
 %% save normalised dirty image & PSF
-fitswrite(single(PSF), fullfile(param_imaging.resultPath, 'PSF.fits'));
+fitswrite(single(PSF), fullfile(param_imaging.resultPath, 'psf.fits'));
 clear PSF;
 fitswrite(single(dirty./PSFPeak), fullfile(param_imaging.resultPath, 'dirty.fits'));
 
@@ -115,9 +112,9 @@ if param_imaging.flag_imaging
     [MODEL, RESIDUAL] = usara(dirty, measop, adjoint_measop, param_imaging, param_algo);
 
     %% Save final results
-    fitswrite(MODEL, fullfile(param_imaging.resultPath, 'usara_model_image.fits')) % model estimate
-    fitswrite(RESIDUAL, fullfile(param_imaging.resultPath, 'usara_residual_dirty_image.fits')) % back-projected residual data
-    fitswrite(RESIDUAL./PSFPeak, fullfile(param_imaging.resultPath, 'usara_normalised_residual_dirty_image.fits')) % normalised back-projected residual data
+    fitswrite(MODEL, fullfile(param_imaging.resultPath, strcat(param_imaging.fileNamePrefix, '_model_image.fits'))) % model estimate
+    fitswrite(RESIDUAL, fullfile(param_imaging.resultPath, strcat(param_imaging.fileNamePrefix, '_residual_dirty_image.fits'))) % back-projected residual data
+    fitswrite(RESIDUAL./PSFPeak, fullfile(param_imaging.resultPath, strcat(param_imaging.fileNamePrefix, '_normalised_residual_dirty_image.fits'))) % normalised back-projected residual data
     fprintf("\nFits files saved.")
 
     %% Final metrics

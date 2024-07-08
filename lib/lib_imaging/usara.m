@@ -80,10 +80,10 @@ for itr_outer = 1:param_algo.imMaxOuterItr
         % save intermediate results
         if param_imaging.itrSave > 0 && mod(itr, param_imaging.itrSave) == 0
             fitswrite(single(MODEL), fullfile(param_imaging.resultPath, ...
-                ['tmpModel_itr_', num2str(itr), '.fits']))
+                strcat(param_imaging.fileNamePrefix, '_tmp_model_itr_', num2str(itr), '.fits')))
             RESIDUAL = dirty - adjoint_measop(measop(MODEL));
             fitswrite(single(RESIDUAL), fullfile(param_imaging.resultPath, ...
-                ['tmpResidual_itr_', num2str(itr), '.fits']))
+                strcat(param_imaging.fileNamePrefix,'_tmp_residual_itr_', num2str(itr), '.fits')))
         end
 
         % update iteration counter

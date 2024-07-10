@@ -28,7 +28,7 @@ We also provide a [tutorial](./tutorial_usara_matlab.mlx) in the format of MATLA
 This repository relies on two auxiliary submodules :
 
 1. [`RI-measurement-operator`](https://github.com/basp-group/RI-measurement-operator) for the formation of the radio-interferometric measurement operator [3,4,5];
-2. [`SARA-dictionary`](https://github.com/basp-group-private/SARA-dictionary/tree/master) for the faceted implementation of the sparsity dictionary [6].
+2. [`SARA-dictionary`](https://github.com/basp-group/SARA-dictionary) for the faceted implementation of the sparsity dictionary [6].
 
 These modules contain codes associated with the following publications
 

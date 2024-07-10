@@ -5,9 +5,9 @@ The algorithms implemented in this repository are launched through the function 
 The configuration file is composed by three parts, i.e. Main, General and Denoiser. 
 
 1. Main
-    - ``srcName``(optional): Experiment/target source name tag, used in the output filenames. 
+    - ``srcName``(optional): Experiment/target source name tag, used in the output subfolder name. 
     - ``dataFile``: Path to the measurement (data) file. The file must be in ``.mat`` format containing fields discussed [here](https://github.com/basp-group/uSARA?tab=readme-ov-file#measurement-file).
-    - ``resultPath``(optional): Path to the output files. The script will create a folder in ``$resultPath`` with name ``${srcname}_${algorithm}_ID_${runID}_heuScale_${heuNoiseScale}_maxItr_${imMaxItr}``. Default: ``$uSARA/results``
+    - ``resultPath``(optional): Path to the output files. The script will create a folder in ``$resultPath`` with name ``${srcname}`` and the result images will be saved in this subfolder and have a prefix ``uSARA_runID_${runID}_heuRegScale_${heuRegParamScale}``. Default: ``$uSARA/results``
     - ``imDimx``: Horizontal dimension of the estimated image.
     - ``imDimy``: Vertical dimension of the estimated image.
     - ``imPixelSize``(optional): Pixel size of the estimated image in the unit of arcsec. If empty, its value is inferred from ``superresolution`` such that ``imPixelSize = (180 / pi) * 3600 / (superresolution * 2 * maxProjBaseline)``.

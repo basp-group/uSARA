@@ -79,7 +79,7 @@ git submodule update --remote --merge # fetch and merge latest state of the subm
 ```
 
 ### MATLAB
-MATLAB can be downloaded from the official website of [MathWorks](https://www.mathworks.com/products/matlab.html). To run this repository, your MATLAB version should be higher than R2019b. Specifically, if you'd like to use the facet parallisation mode, then the version should be higher than R2022b. The below toolboxes are required:
+MATLAB can be downloaded from the official website of [MathWorks](https://www.mathworks.com/products/matlab.html). To run this repository, your MATLAB version should be higher than R2019b. Specifically, if you'd like to use the facet parallelisation mode, then the version should be higher than R2022b. The below toolboxes are required:
 
 ```
 Wavelet Toolbox
@@ -103,7 +103,7 @@ The current code takes as input data a measurement file in ``.mat`` format, and 
 
 An example measurement file ``3c353_meas_dt_1_seed_0.mat`` is provided in the folder ``$uSARA$/data``. The full synthetic test set used in [1] can be found in this (temporary) [Dropbox link](https://www.dropbox.com/scl/fo/et0o4jl0d9twskrshdd7j/h?rlkey=gyl3fj3y7ca1tmoa1gav71kgg&dl=0) and the corresponding ground truth images are in this (temporary) [Dropbox link](https://www.dropbox.com/scl/fo/mct058u0ww9301vrsgeqj/h?rlkey=hz8py389nay5jmqgzxz4knqja&dl=0).
 
-To extract the measurement file from Measurement Set Tables (MS), you can use the utility Python script `$uSARA/ms2mat/ms2mat.py`. Instructions are provided in the [Readme File](https://github.com/basp-group/uSARA/blob/main/ms2mat/README.md).
+To extract the measurement file from Measurement Set Tables (MS), you can use the utility Python script `$uSARA/ms2mat/ms2mat.py`. Instructions are provided in the [README File](https://github.com/basp-group/uSARA/blob/main/ms2mat/README.md).
 
 Note that the measurement file is of the same format as the input expected in the library [Faceted-HyperSARA](https://github.com/basp-group/Faceted-HyperSARA) for wideband imaging. 
 ### Configuration (parameter) file
